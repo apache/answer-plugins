@@ -76,6 +76,11 @@
       "link": "https://github.com/apache/answer-plugins/tree/main/notification-slack"
     },
     {
+      "name": "Wecom Notification",
+      "desc": "Send notifications to Wecom",
+      "link": "https://github.com/apache/answer-plugins/tree/main/notification-wecom"
+    },
+    {
       "name": "Code Highlight",
       "desc": "Highlight code blocks in Markdown content",
       "link": "https://github.com/apache/answer-plugins/tree/main/render-markdown-codehighlight"
@@ -213,13 +218,18 @@
       "link": "https://github.com/apache/answer-plugins/tree/main/notification-slack"
     },
     {
+      "name": "企业微信通知",
+      "desc": "发送通知到企业微信",
+      "link": "https://github.com/apache/answer-plugins/tree/main/notification-wecom"
+    },
+    {
       "name": "代码高亮",
       "desc": "高亮显示 Markdown 内容中的代码块",
       "link": "https://github.com/apache/answer-plugins/tree/main/render-markdown-codehighlight"
     },
     {
-      "name": "Akismet Anti-Spam",
-      "desc": "Akismet Anti-Spam is used to check the content of posts and comments against the Akismet web service to see if they look like spam.",
+      "name": "Akismet 反垃圾",
+      "desc": "Akismet 反垃圾用于检查帖子和评论内容，以确定它们是否像垃圾内容。",
       "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-akismet"
     },
     {
@@ -264,7 +274,7 @@
     },
     {
       "name": "Slack",
-      "desc": "通过Slack进行登录",
+      "desc": "通过 Slack 进行登录",
       "link": "https://github.com/apache/answer-plugins/tree/main/user-center-slack"
     },
     {

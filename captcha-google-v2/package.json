@@ -3,7 +3,7 @@
   "private": true,
   "author": "Answer.dev",
   "description": "google reCaptcha v2",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "files": [
     "dist",
     "README.md"
