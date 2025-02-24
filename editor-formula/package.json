@@ -2,7 +2,7 @@
   "name": "editor-formula",
   "private": true,
   "author": "Answer.dev",
-  "version": "1.2.13",
+  "version": "1.2.14",
   "files": [
     "dist",
     "README.md"
