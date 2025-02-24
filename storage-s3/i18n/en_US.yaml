@@ -59,11 +59,6 @@ plugin:
             other: Access URL prefix
           description:
             other: prefix of the final access address of the uploaded file, ending with '/' https://example.com/xxx/
-        max_file_size:
-          title:
-            other: Maximum file size(MB)
-          description:
-            other: Limit the maximum size of uploaded files, in MB, default is 10MB
         region:
           title:
             other: Region

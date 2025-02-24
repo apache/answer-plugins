@@ -51,7 +51,6 @@ type StorageConfig struct {
 	AccessKeySecret string `json:"access_key_secret"`
 	AccessToken     string `json:"access_token"`
 	VisitUrlPrefix  string `json:"visit_url_prefix"`
-	MaxFileSize     string `json:"max_file_size"`
 	Region          string `json:"region"`
 	DisableSSL      bool   `json:"disable_ssl"`
 }
