@@ -81,7 +81,7 @@ func (s *Storage) Info() plugin.Info {
 	}
 }
 
-func (s *Storage) UploadFile(ctx *plugin.GinContext, source plugin.UploadSource) (resp plugin.UploadFileResponse) {
+func (s *Storage) UploadFile(ctx *plugin.GinContext, source plugin.UploadFileCondition) (resp plugin.UploadFileResponse) {
 	resp = plugin.UploadFileResponse{}
 
 	file, err := ctx.FormFile("file")
@@ -91,7 +91,7 @@ func (s *Storage) UploadFile(ctx *plugin.GinContext, source plugin.UploadSource)
 		return resp
 	}
 
-	if !s.checkFileType(file.Filename, source) {
+	if !s.checkFileType(file.Filename, condition.Source) {
 		resp.OriginalError = fmt.Errorf("file type not allowed")
 		resp.DisplayErrorMsg = plugin.MakeTranslator(i18n.ErrUnsupportedFileType)
 		return resp
@@ -111,7 +111,7 @@ func (s *Storage) UploadFile(ctx *plugin.GinContext, source plugin.UploadSource)
 	}
 	defer openFile.Close()
 
-	objectKey := s.createObjectKey(file.Filename, source)
+	objectKey := s.createObjectKey(file.Filename, condition.Source)
 	err = s.Client.PutObject(objectKey, strings.ToLower(filepath.Ext(file.Filename)), openFile)
 	if err != nil {
 		resp.OriginalError = fmt.Errorf("upload file failed: %v", err)
