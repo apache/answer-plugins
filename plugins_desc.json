@@ -1,141 +1,4 @@
 {
-  "en_US": [
-    {
-      "name": "Redis Cache",
-      "desc": "Use Redis as cache",
-      "link": "https://github.com/apache/answer-plugins/tree/main/cache-redis"
-    },
-    {
-      "name": "Basic Captcha",
-      "desc": "Default graphic verification code",
-      "link": "https://github.com/apache/answer-plugins/tree/main/captcha-basic"
-    },
-    {
-      "name": "Google reCAPTCHA v2",
-      "desc": "Google reCAPTCHA v2 plugin",
-      "link": "https://github.com/apache/answer-plugins/tree/main/captcha-google-v2"
-    },
-    {
-      "name": "Aliyun CDN",
-      "desc": "Speed up your website and enjoy greatly improved loading times around the world.",
-      "link": "https://github.com/apache/answer-plugins/tree/main/cdn-aliyun"
-    },
-    {
-      "name": "Amazon CloudFront",
-      "desc": "Speed up your website and enjoy greatly improved loading times around the world.",
-      "link": "https://github.com/apache/answer-plugins/tree/main/cdn-s3"
-    },
-    {
-      "name": "Apache Connector",
-      "desc": "Connect to Apache Oauth",
-      "link": "https://github.com/apache/answer-plugins/tree/main/connector-apache"
-    },
-    {
-      "name": "OAuth2 Basic",
-      "desc": "Generic OAuth2 Plugin",
-      "link": "https://github.com/apache/answer-plugins/tree/main/connector-basic"
-    },
-    {
-      "name": "Dingtalk Connector",
-      "desc": "Connect to Dingtalk for third-party login",
-      "link": "https://github.com/apache/answer-plugins/tree/main/connector-dingtalk"
-    },
-    {
-      "name": "Google Connector",
-      "desc": "Connect to Google for third-party login",
-      "link": "https://github.com/apache/answer-plugins/tree/main/connector-google"
-    },
-    {
-      "name": "Wallet Connector",
-      "desc": "Connect to Wallet for third-party login",
-      "link": "https://github.com/apache/answer-plugins/tree/main/connector-wallet"
-    },
-    {
-      "name": "Chart Editor",
-      "desc": "Render chart in editor",
-      "link": "https://github.com/apache/answer-plugins/tree/main/editor-chart"
-    },
-    {
-      "name": "Formula Editor",
-      "desc": "Render formula in editor",
-      "link": "https://github.com/apache/answer-plugins/tree/main/editor-formula"
-    },
-    {
-      "name": "Embed",
-      "desc": "Embed content from other sites",
-      "link": "https://github.com/apache/answer-plugins/tree/main/embed-basic"
-    },
-    {
-      "name": "Ding talk Notification",
-      "desc": "Send notifications to Ding Talk",
-      "link": "https://github.com/apache/answer-plugins/tree/main/notification-dingtalk"
-    },
-    {
-      "name": "Slack Notification",
-      "desc": "Send notifications to Slack",
-      "link": "https://github.com/apache/answer-plugins/tree/main/notification-slack"
-    },
-    {
-      "name": "Code Highlight",
-      "desc": "Highlight code blocks in Markdown content",
-      "link": "https://github.com/apache/answer-plugins/tree/main/render-markdown-codehighlight"
-    },
-    {
-      "name": "Akismet Anti-Spam",
-      "desc": "Akismet Anti-Spam is used to check the content of posts and comments against the Akismet web service to see if they look like spam.",
-      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-akismet"
-    },
-    {
-      "name": "Baidu Anti-Spam",
-      "desc": "Baidu Anti-Spam is used to check the content of posts and comments against the Baidu web service to see if they look like spam.",
-      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-baidu"
-    },
-    {
-      "name": "Review Basic",
-      "desc": "Generic review rule plugin",
-      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-basic"
-    },
-    {
-      "name": "Algolia Search",
-      "desc": "Use Algolia as a search engine.",
-      "link": "https://github.com/apache/answer-plugins/tree/main/search-algolia"
-    },
-    {
-      "name": "Elasticsearch Engine",
-      "desc": "Use Elasticsearch as search engine",
-      "link": "https://github.com/apache/answer-plugins/tree/main/search-elasticsearch"
-    },
-    {
-      "name": "MeiliSearch",
-      "desc": "MeiliSearch is a powerful, fast, open-source, easy to use and deploy search engine.",
-      "link": "https://github.com/apache/answer-plugins/tree/main/search-meilisearch"
-    },
-    {
-      "name": "Aliyun OSS storage",
-      "desc": "Upload files to AliCloud OSS storage",
-      "link": "https://github.com/apache/answer-plugins/tree/main/storage-aliyunoss"
-    },
-    {
-      "name": "S3 storage",
-      "desc": "Upload files to S3 storage",
-      "link": "https://github.com/apache/answer-plugins/tree/main/storage-s3"
-    },
-    {
-      "name": "Tencent COS storage",
-      "desc": "Upload files to Tencent COS storage",
-      "link": "https://github.com/apache/answer-plugins/tree/main/storage-tencentyuncos"
-    },
-    {
-      "name": "Slack User Center",
-      "desc": "A plugin for integrating Slack user management",
-      "link": "https://github.com/apache/answer-plugins/tree/main/user-center-slack"
-    },
-    {
-      "name": "WeCom",
-      "desc": "Get user info from WeCom and sync to User Center",
-      "link": "https://github.com/apache/answer-plugins/tree/main/user-center-wecom"
-    }
-  ],
   "zh_CN": [
     {
       "name": "Redis缓存",
@@ -213,13 +76,18 @@
       "link": "https://github.com/apache/answer-plugins/tree/main/notification-slack"
     },
     {
+      "name": "企业微信通知",
+      "desc": "发送通知到企业微信",
+      "link": "https://github.com/apache/answer-plugins/tree/main/notification-wecom"
+    },
+    {
       "name": "代码高亮",
       "desc": "高亮显示 Markdown 内容中的代码块",
       "link": "https://github.com/apache/answer-plugins/tree/main/render-markdown-codehighlight"
     },
     {
-      "name": "Akismet Anti-Spam",
-      "desc": "Akismet Anti-Spam is used to check the content of posts and comments against the Akismet web service to see if they look like spam.",
+      "name": "Akismet 反垃圾",
+      "desc": "Akismet 反垃圾用于检查帖子和评论内容，以确定它们是否像垃圾内容。",
       "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-akismet"
     },
     {
@@ -264,12 +132,154 @@
     },
     {
       "name": "Slack",
-      "desc": "通过Slack进行登录",
+      "desc": "通过 Slack 进行登录",
       "link": "https://github.com/apache/answer-plugins/tree/main/user-center-slack"
     },
     {
       "name": "企业微信",
       "desc": "从企业微信获取用户信息并同步到用户中心",
+      "link": "https://github.com/apache/answer-plugins/tree/main/user-center-wecom"
+    }
+  ],
+  "en_US": [
+    {
+      "name": "Redis Cache",
+      "desc": "Use Redis as cache",
+      "link": "https://github.com/apache/answer-plugins/tree/main/cache-redis"
+    },
+    {
+      "name": "Basic Captcha",
+      "desc": "Default graphic verification code",
+      "link": "https://github.com/apache/answer-plugins/tree/main/captcha-basic"
+    },
+    {
+      "name": "Google reCAPTCHA v2",
+      "desc": "Google reCAPTCHA v2 plugin",
+      "link": "https://github.com/apache/answer-plugins/tree/main/captcha-google-v2"
+    },
+    {
+      "name": "Aliyun CDN",
+      "desc": "Speed up your website and enjoy greatly improved loading times around the world.",
+      "link": "https://github.com/apache/answer-plugins/tree/main/cdn-aliyun"
+    },
+    {
+      "name": "Amazon CloudFront",
+      "desc": "Speed up your website and enjoy greatly improved loading times around the world.",
+      "link": "https://github.com/apache/answer-plugins/tree/main/cdn-s3"
+    },
+    {
+      "name": "Apache Connector",
+      "desc": "Connect to Apache Oauth",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-apache"
+    },
+    {
+      "name": "OAuth2 Basic",
+      "desc": "Generic OAuth2 Plugin",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-basic"
+    },
+    {
+      "name": "Dingtalk Connector",
+      "desc": "Connect to Dingtalk for third-party login",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-dingtalk"
+    },
+    {
+      "name": "Google Connector",
+      "desc": "Connect to Google for third-party login",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-google"
+    },
+    {
+      "name": "Wallet Connector",
+      "desc": "Connect to Wallet for third-party login",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-wallet"
+    },
+    {
+      "name": "Chart Editor",
+      "desc": "Render chart in editor",
+      "link": "https://github.com/apache/answer-plugins/tree/main/editor-chart"
+    },
+    {
+      "name": "Formula Editor",
+      "desc": "Render formula in editor",
+      "link": "https://github.com/apache/answer-plugins/tree/main/editor-formula"
+    },
+    {
+      "name": "Embed",
+      "desc": "Embed content from other sites",
+      "link": "https://github.com/apache/answer-plugins/tree/main/embed-basic"
+    },
+    {
+      "name": "Ding talk Notification",
+      "desc": "Send notifications to Ding Talk",
+      "link": "https://github.com/apache/answer-plugins/tree/main/notification-dingtalk"
+    },
+    {
+      "name": "Slack Notification",
+      "desc": "Send notifications to Slack",
+      "link": "https://github.com/apache/answer-plugins/tree/main/notification-slack"
+    },
+    {
+      "name": "Wecom Notification",
+      "desc": "Send notifications to Wecom",
+      "link": "https://github.com/apache/answer-plugins/tree/main/notification-wecom"
+    },
+    {
+      "name": "Code Highlight",
+      "desc": "Highlight code blocks in Markdown content",
+      "link": "https://github.com/apache/answer-plugins/tree/main/render-markdown-codehighlight"
+    },
+    {
+      "name": "Akismet Anti-Spam",
+      "desc": "Akismet Anti-Spam is used to check the content of posts and comments against the Akismet web service to see if they look like spam.",
+      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-akismet"
+    },
+    {
+      "name": "Baidu Anti-Spam",
+      "desc": "Baidu Anti-Spam is used to check the content of posts and comments against the Baidu web service to see if they look like spam.",
+      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-baidu"
+    },
+    {
+      "name": "Review Basic",
+      "desc": "Generic review rule plugin",
+      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-basic"
+    },
+    {
+      "name": "Algolia Search",
+      "desc": "Use Algolia as a search engine.",
+      "link": "https://github.com/apache/answer-plugins/tree/main/search-algolia"
+    },
+    {
+      "name": "Elasticsearch Engine",
+      "desc": "Use Elasticsearch as search engine",
+      "link": "https://github.com/apache/answer-plugins/tree/main/search-elasticsearch"
+    },
+    {
+      "name": "MeiliSearch",
+      "desc": "MeiliSearch is a powerful, fast, open-source, easy to use and deploy search engine.",
+      "link": "https://github.com/apache/answer-plugins/tree/main/search-meilisearch"
+    },
+    {
+      "name": "Aliyun OSS storage",
+      "desc": "Upload files to AliCloud OSS storage",
+      "link": "https://github.com/apache/answer-plugins/tree/main/storage-aliyunoss"
+    },
+    {
+      "name": "S3 storage",
+      "desc": "Upload files to S3 storage",
+      "link": "https://github.com/apache/answer-plugins/tree/main/storage-s3"
+    },
+    {
+      "name": "Tencent COS storage",
+      "desc": "Upload files to Tencent COS storage",
+      "link": "https://github.com/apache/answer-plugins/tree/main/storage-tencentyuncos"
+    },
+    {
+      "name": "Slack User Center",
+      "desc": "A plugin for integrating Slack user management",
+      "link": "https://github.com/apache/answer-plugins/tree/main/user-center-slack"
+    },
+    {
+      "name": "WeCom",
+      "desc": "Get user info from WeCom and sync to User Center",
       "link": "https://github.com/apache/answer-plugins/tree/main/user-center-wecom"
     }
   ]
