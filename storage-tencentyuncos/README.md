@@ -1,4 +1,4 @@
-# Tencent COS Storage (preview)
+# Tencent COS Storage
 
 > This plugin can be used to store attachments and avatars to Tencent COS.
 
@@ -18,4 +18,3 @@
 - `Secret ID` - Secret ID of the Tencent COS storage
 - `Secret Key` - Secret Key of the Tencent COS storage
 - `Visit Url Prefix` - Prefix of access address for the uploaded file, ending with '/' such as https://example.com/xxx/
-- `Max File Size` - Max file size in MB, default is 10MB
