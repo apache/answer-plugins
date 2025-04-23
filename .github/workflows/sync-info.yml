@@ -17,8 +17,6 @@
 
 name: Sync info
 on:
-  pull_request:
-    branches: [dev, main]
   push:
     branches: [dev, main]
 
@@ -40,5 +38,3 @@ jobs:
           title: "chore: Sync Plugin Info"
           body: "Sync Plugin Info"
           branch: "chore/sync-info"
-          
-  
