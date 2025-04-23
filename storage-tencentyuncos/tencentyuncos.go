@@ -27,6 +27,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 	"path/filepath"
 	"strings"
 	"time"
@@ -41,6 +42,11 @@ import (
 
 //go:embed  info.yaml
 var Info embed.FS
+
+var (
+	// aclPublicRead is the environment variable for some special platforms such as digital ocean
+	aclPublicRead = os.Getenv("ACL_PUBLIC_READ")
+)
 
 type Storage struct {
 	Config *StorageConfig
@@ -122,7 +128,15 @@ func (s *Storage) UploadFile(ctx *plugin.GinContext, condition plugin.UploadFile
 	defer openFile.Close()
 
 	objectKey := s.createObjectKey(file.Filename, condition.Source)
-	_, err = client.Object.Put(ctx, objectKey, openFile, nil)
+	var options *cos.ObjectPutOptions
+	if len(aclPublicRead) > 0 {
+		options = &cos.ObjectPutOptions{
+			ACLHeaderOptions: &cos.ACLHeaderOptions{
+				XCosACL: "public-read",
+			},
+		}
+	}
+	_, err = client.Object.Put(ctx, objectKey, openFile, options)
 	if err != nil {
 		resp.OriginalError = fmt.Errorf("upload file failed: %v", err)
 		resp.DisplayErrorMsg = plugin.MakeTranslator(i18n.ErrUploadFileFailed)
