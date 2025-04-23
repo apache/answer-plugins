@@ -28,9 +28,10 @@ import (
 	"net/http"
 	"net/url"
 	"path/filepath"
-	"strconv"
 	"strings"
 	"time"
+
+	"github.com/apache/answer/pkg/checker"
 
 	"github.com/apache/answer-plugins/storage-tencentyuncos/i18n"
 	"github.com/apache/answer-plugins/util"
@@ -40,11 +41,6 @@ import (
 
 //go:embed  info.yaml
 var Info embed.FS
-
-const (
-	// 10MB
-	defaultMaxFileSize int64 = 10 * 1024 * 1024
-)
 
 type Storage struct {
 	Config *StorageConfig
@@ -57,7 +53,6 @@ type StorageConfig struct {
 	SecretID        string `json:"secret_id"`
 	SecretKey       string `json:"secret_key"`
 	VisitUrlPrefix  string `json:"visit_url_prefix"`
-	MaxFileSize     string `json:"max_file_size"`
 }
 
 func init() {
@@ -80,7 +75,7 @@ func (s *Storage) Info() plugin.Info {
 	}
 }
 
-func (s *Storage) UploadFile(ctx *plugin.GinContext, source plugin.UploadSource) (resp plugin.UploadFileResponse) {
+func (s *Storage) UploadFile(ctx *plugin.GinContext, condition plugin.UploadFileCondition) (resp plugin.UploadFileResponse) {
 	resp = plugin.UploadFileResponse{}
 
 	BucketURL, _ := url.Parse(fmt.Sprintf("https://%s.cos.%s.myqcloud.com", s.Config.BucketName, s.Config.Region))
@@ -106,13 +101,13 @@ func (s *Storage) UploadFile(ctx *plugin.GinContext, source plugin.UploadSource)
 		return resp
 	}
 
-	if !s.CheckFileType(file.Filename, source) {
+	if s.IsUnsupportedFileType(file.Filename, condition) {
 		resp.OriginalError = fmt.Errorf("file type not allowed")
 		resp.DisplayErrorMsg = plugin.MakeTranslator(i18n.ErrUnsupportedFileType)
 		return resp
 	}
 
-	if file.Size > s.maxFileSizeLimit() {
+	if s.ExceedFileSizeLimit(file.Size, condition) {
 		resp.OriginalError = fmt.Errorf("file size too large")
 		resp.DisplayErrorMsg = plugin.MakeTranslator(i18n.ErrOverFileSizeLimit)
 		return resp
@@ -126,7 +121,7 @@ func (s *Storage) UploadFile(ctx *plugin.GinContext, source plugin.UploadSource)
 	}
 	defer openFile.Close()
 
-	objectKey := s.createObjectKey(file.Filename, source)
+	objectKey := s.createObjectKey(file.Filename, condition.Source)
 	_, err = client.Object.Put(ctx, objectKey, openFile, nil)
 	if err != nil {
 		resp.OriginalError = fmt.Errorf("upload file failed: %v", err)
@@ -137,6 +132,29 @@ func (s *Storage) UploadFile(ctx *plugin.GinContext, source plugin.UploadSource)
 	return resp
 }
 
+func (s *Storage) IsUnsupportedFileType(originalFilename string, condition plugin.UploadFileCondition) bool {
+	if condition.Source == plugin.AdminBranding || condition.Source == plugin.UserAvatar {
+		ext := strings.ToLower(filepath.Ext(originalFilename))
+		if _, ok := plugin.DefaultFileTypeCheckMapping[condition.Source][ext]; ok {
+			return false
+		}
+		return true
+	}
+
+	// check the post image and attachment file type check
+	if condition.Source == plugin.UserPost {
+		return checker.IsUnAuthorizedExtension(originalFilename, condition.AuthorizedImageExtensions)
+	}
+	return checker.IsUnAuthorizedExtension(originalFilename, condition.AuthorizedAttachmentExtensions)
+}
+
+func (s *Storage) ExceedFileSizeLimit(fileSize int64, condition plugin.UploadFileCondition) bool {
+	if condition.Source == plugin.UserPostAttachment {
+		return fileSize > int64(condition.MaxAttachmentSize)*1024*1024
+	}
+	return fileSize > int64(condition.MaxImageSize)*1024*1024
+}
+
 func (s *Storage) createObjectKey(originalFilename string, source plugin.UploadSource) string {
 	ext := strings.ToLower(filepath.Ext(originalFilename))
 	randomString := s.randomObjectKey()
@@ -145,6 +163,8 @@ func (s *Storage) createObjectKey(originalFilename string, source plugin.UploadS
 		return s.Config.ObjectKeyPrefix + "avatar/" + randomString + ext
 	case plugin.UserPost:
 		return s.Config.ObjectKeyPrefix + "post/" + randomString + ext
+	case plugin.UserPostAttachment:
+		return s.Config.ObjectKeyPrefix + "attachment/" + randomString + ext
 	case plugin.AdminBranding:
 		return s.Config.ObjectKeyPrefix + "branding/" + randomString + ext
 	default:
@@ -164,17 +184,6 @@ func (s *Storage) CheckFileType(originalFilename string, source plugin.UploadSou
 		return true
 	}
 	return false
-}
-
-func (s *Storage) maxFileSizeLimit() int64 {
-	if len(s.Config.MaxFileSize) == 0 {
-		return defaultMaxFileSize
-	}
-	limit, _ := strconv.Atoi(s.Config.MaxFileSize)
-	if limit <= 0 {
-		return defaultMaxFileSize
-	}
-	return int64(limit) * 1024 * 1024
 }
 
 func (s *Storage) ConfigFields() []plugin.ConfigField {
@@ -244,17 +253,6 @@ func (s *Storage) ConfigFields() []plugin.ConfigField {
 				InputType: plugin.InputTypeText,
 			},
 			Value: s.Config.VisitUrlPrefix,
-		},
-		{
-			Name:        "max_file_size",
-			Type:        plugin.ConfigTypeInput,
-			Title:       plugin.MakeTranslator(i18n.ConfigMaxFileSizeTitle),
-			Description: plugin.MakeTranslator(i18n.ConfigMaxFileSizeDescription),
-			Required:    false,
-			UIOptions: plugin.ConfigFieldUIOptions{
-				InputType: plugin.InputTypeNumber,
-			},
-			Value: s.Config.MaxFileSize,
 		},
 	}
 }

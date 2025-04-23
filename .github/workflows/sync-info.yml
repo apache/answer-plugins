@@ -40,6 +40,5 @@ jobs:
           title: "chore: Sync Plugin Info"
           body: "Sync Plugin Info"
           branch: "chore/sync-info"
-          base: "dev"
           
   

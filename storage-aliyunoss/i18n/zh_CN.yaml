@@ -54,11 +54,6 @@ plugin:
             other: 访问URL前缀
           description:
             other: 上传文件最终访问地址的前缀，以 '/' 结尾 https://example.com/xxx/
-        max_file_size:
-          title:
-            other: 最大文件大小(MB)
-          description:
-            other: 限制上传文件的最大大小，单位为MB，默认为 10MB
       err:
         mis_storage_config:
           other: 错误的存储配置导致上传失败

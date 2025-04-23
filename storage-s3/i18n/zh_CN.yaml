@@ -59,11 +59,6 @@ plugin:
             other: 访问URL前缀
           description:
             other: 上传文件最终访问地址的前缀，以 '/' 结尾 https://example.com/xxx/
-        max_file_size:
-          title:
-            other: 文件最大大小(MB)
-          description:
-            other: 限制上传文件的最大大小，单位MB，默认为10MB
         region:
           title:
             other: 区域(Region)

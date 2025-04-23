@@ -1,4 +1,4 @@
-# S3 Storage (preview)
+# S3 Storage
 > This plugin can be used to store attachments and avatars to AWS S3.
 
 ## How to use
@@ -16,4 +16,3 @@
 - `Access Key Secret` - AccessKeySecret of the S3
 - `Access Token` - AccessToken of the S3
 - `Visit Url Prefix` - Prefix of access address for the uploaded file, ending with '/' such as https://example.com/xxx/
-- `Max File Size` - Max file size in MB, default is 10MB

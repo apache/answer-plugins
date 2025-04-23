@@ -35,8 +35,6 @@ const (
 	ConfigAccessKeySecretDescription = "plugin.aliyunoss_storage.backend.config.access_key_secret.description"
 	ConfigVisitUrlPrefixTitle        = "plugin.aliyunoss_storage.backend.config.visit_url_prefix.title"
 	ConfigVisitUrlPrefixDescription  = "plugin.aliyunoss_storage.backend.config.visit_url_prefix.description"
-	ConfigMaxFileSizeTitle           = "plugin.aliyunoss_storage.backend.config.max_file_size.title"
-	ConfigMaxFileSizeDescription     = "plugin.aliyunoss_storage.backend.config.max_file_size.description"
 
 	ErrMisStorageConfig    = "plugin.aliyunoss_storage.backend.err.mis_storage_config"
 	ErrFileNotFound        = "plugin.aliyunoss_storage.backend.err.file_not_found"

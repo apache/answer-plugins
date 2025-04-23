@@ -35,8 +35,6 @@ const (
 	ConfigSecretKeyDescription       = "plugin.tencentyuncos_storage.backend.config.secret_key.description"
 	ConfigVisitUrlPrefixTitle        = "plugin.tencentyuncos_storage.backend.config.visit_url_prefix.title"
 	ConfigVisitUrlPrefixDescription  = "plugin.tencentyuncos_storage.backend.config.visit_url_prefix.description"
-	ConfigMaxFileSizeTitle           = "plugin.tencentyuncos_storage.backend.config.max_file_size.title"
-	ConfigMaxFileSizeDescription     = "plugin.tencentyuncos_storage.backend.config.max_file_size.description"
 
 	ErrMisStorageConfig    = "plugin.tencentyuncos_storage.backend.err.mis_storage_config"
 	ErrFileNotFound        = "plugin.tencentyuncos_storage.backend.err.file_not_found"

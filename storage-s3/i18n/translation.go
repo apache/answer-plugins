@@ -37,8 +37,6 @@ const (
 	ConfigAccessTokenDescription     = "plugin.s3_storage.backend.config.access_token.description"
 	ConfigVisitUrlPrefixTitle        = "plugin.s3_storage.backend.config.visit_url_prefix.title"
 	ConfigVisitUrlPrefixDescription  = "plugin.s3_storage.backend.config.visit_url_prefix.description"
-	ConfigMaxFileSizeTitle           = "plugin.s3_storage.backend.config.max_file_size.title"
-	ConfigMaxFileSizeDescription     = "plugin.s3_storage.backend.config.max_file_size.description"
 	ConfigRegionTitle                = "plugin.s3_storage.backend.config.region.title"
 	ConfigRegionDescription          = "plugin.s3_storage.backend.config.region.description"
 	ConfigDisableSSLTitle            = "plugin.s3_storage.backend.config.disable_ssl.title"
