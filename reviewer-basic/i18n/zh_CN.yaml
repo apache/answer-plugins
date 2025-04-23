@@ -33,6 +33,8 @@ plugin:
             other: 内容发布者必须要有通过审核的帖子
           description:
             other: 问题或答案将保存在审查队列中，在获得批准之前不可见。
+          select_option:
+            other: 请选择...
         review_post_keywords:
           title:
             other: 审核帖子关键词

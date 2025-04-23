@@ -17,6 +17,6 @@
 
 slug_name: basic_reviewer
 type: reviewer
-version: 1.0.6
+version: 1.0.7
 author: answerdev
 link: https://github.com/apache/answer-plugins/tree/main/reviewer-basic

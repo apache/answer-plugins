@@ -26,6 +26,7 @@ const (
 	ConfigReviewPostLabelFirst          = "plugin.basic_reviewer.backend.config.review_post.label_first"
 	ConfigReviewPostTitle               = "plugin.basic_reviewer.backend.config.review_post.title"
 	ConfigReviewPostDescription         = "plugin.basic_reviewer.backend.config.review_post.description"
+	ConfigSelectOption                  = "plugin.basic_reviewer.backend.config.review_post.select_option"
 	ConfigReviewPostKeywordsTitle       = "plugin.basic_reviewer.backend.config.review_post_keywords.title"
 	ConfigReviewPostKeywordsDescription = "plugin.basic_reviewer.backend.config.review_post_keywords.description"
 	ConfigDisallowedKeywordsTitle       = "plugin.basic_reviewer.backend.config.disallowed_post_keywords.title"

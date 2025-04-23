@@ -28,11 +28,13 @@ plugin:
           title:
             other: Before a post appears
           label_all:
-            other: Post must be manually approved
+            other: All new posts must be manually approved
           label_first:
             other: Post author must have a previously approved post
           description:
             other: Questions or answers will be held in the review queue and will not be visible until they are approved.
+          select_option:
+            other: Select...
         review_post_keywords:
           title:
             other: Review post keywords

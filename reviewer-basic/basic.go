@@ -38,9 +38,16 @@ type Reviewer struct {
 	Config *ReviewerConfig
 }
 
+const (
+	OptionNone  = "none"
+	OptionAll   = "all"
+	OptionFirst = "first"
+)
+
 type ReviewerConfig struct {
 	PostAllNeedReview      bool   `json:"review_post_all"`
 	PostNeedReview         bool   `json:"review_post"`
+	PostReviewOption       string `json:"review_post_option"`
 	PostReviewKeywords     string `json:"review_post_keywords"`
 	PostDisallowedKeywords string `json:"disallowed_keywords"`
 }
@@ -73,8 +80,7 @@ func (r *Reviewer) Review(content *plugin.ReviewContent) (result *plugin.ReviewR
 		return result
 	}
 
-	// all post need review
-	if r.Config.PostAllNeedReview {
+	if r.Config.PostReviewOption == OptionAll || (r.Config.PostReviewOption == "" && r.Config.PostAllNeedReview) {
 		result = &plugin.ReviewResult{
 			Approved:     false,
 			ReviewStatus: plugin.ReviewStatusNeedReview,
@@ -83,8 +89,7 @@ func (r *Reviewer) Review(content *plugin.ReviewContent) (result *plugin.ReviewR
 		return result
 	}
 
-	// this switch is true and have any other approved post, return directly
-	if r.Config.PostNeedReview && content.Author.ApprovedQuestionAmount+content.Author.ApprovedAnswerAmount == 0 {
+	if (r.Config.PostReviewOption == OptionFirst || (r.Config.PostReviewOption == "" && r.Config.PostNeedReview)) && content.Author.ApprovedQuestionAmount+content.Author.ApprovedAnswerAmount == 0 {
 		result = &plugin.ReviewResult{
 			Approved:     false,
 			ReviewStatus: plugin.ReviewStatusNeedReview,
@@ -140,7 +145,40 @@ func (r *Reviewer) Review(content *plugin.ReviewContent) (result *plugin.ReviewR
 }
 
 func (r *Reviewer) ConfigFields() []plugin.ConfigField {
+	defaultOption := OptionNone
+	if r.Config.PostReviewOption == "" {
+		if r.Config.PostAllNeedReview {
+			defaultOption = OptionAll
+		} else if r.Config.PostNeedReview {
+			defaultOption = OptionFirst
+		}
+	} else {
+		defaultOption = r.Config.PostReviewOption
+	}
+
 	return []plugin.ConfigField{
+		{
+			Name:      "review_post_option",
+			Type:      plugin.ConfigTypeSelect,
+			Title:     plugin.MakeTranslator(i18n.ConfigReviewPostTitle),
+			Required:  false,
+			UIOptions: plugin.ConfigFieldUIOptions{},
+			Value:     defaultOption,
+			Options: []plugin.ConfigFieldOption{
+				{
+					Value: OptionNone,
+					Label: plugin.MakeTranslator(i18n.ConfigSelectOption),
+				},
+				{
+					Value: OptionAll,
+					Label: plugin.MakeTranslator(i18n.ConfigReviewPostLabelAll),
+				},
+				{
+					Value: OptionFirst,
+					Label: plugin.MakeTranslator(i18n.ConfigReviewPostLabelFirst),
+				},
+			},
+		},
 		{
 			Name:  "review_post_all",
 			Type:  plugin.ConfigTypeSwitch,
@@ -180,6 +218,18 @@ func (r *Reviewer) ConfigFields() []plugin.ConfigField {
 func (r *Reviewer) ConfigReceiver(config []byte) error {
 	c := &ReviewerConfig{}
 	_ = json.Unmarshal(config, c)
+
+	if c.PostReviewOption == OptionAll {
+		c.PostAllNeedReview = true
+		c.PostNeedReview = false
+	} else if c.PostReviewOption == OptionFirst {
+		c.PostAllNeedReview = false
+		c.PostNeedReview = true
+	} else if c.PostReviewOption == OptionNone {
+		c.PostAllNeedReview = false
+		c.PostNeedReview = false
+	}
+
 	r.Config = c
 	return nil
 }
