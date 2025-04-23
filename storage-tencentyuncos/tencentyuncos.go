@@ -27,7 +27,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"os"
 	"path/filepath"
 	"strings"
 	"time"
@@ -43,11 +42,6 @@ import (
 //go:embed  info.yaml
 var Info embed.FS
 
-var (
-	// aclPublicRead is the environment variable for some special platforms such as digital ocean
-	aclPublicRead = os.Getenv("ACL_PUBLIC_READ")
-)
-
 type Storage struct {
 	Config *StorageConfig
 }
@@ -59,6 +53,7 @@ type StorageConfig struct {
 	SecretID        string `json:"secret_id"`
 	SecretKey       string `json:"secret_key"`
 	VisitUrlPrefix  string `json:"visit_url_prefix"`
+	ACL             string `json:"acl"`
 }
 
 func init() {
@@ -129,7 +124,7 @@ func (s *Storage) UploadFile(ctx *plugin.GinContext, condition plugin.UploadFile
 
 	objectKey := s.createObjectKey(file.Filename, condition.Source)
 	var options *cos.ObjectPutOptions
-	if len(aclPublicRead) > 0 {
+	if s.Config.ACL == "public-read" {
 		options = &cos.ObjectPutOptions{
 			ACLHeaderOptions: &cos.ACLHeaderOptions{
 				XCosACL: "public-read",
@@ -267,6 +262,24 @@ func (s *Storage) ConfigFields() []plugin.ConfigField {
 				InputType: plugin.InputTypeText,
 			},
 			Value: s.Config.VisitUrlPrefix,
+		},
+		{
+			Name:        "acl",
+			Type:        plugin.ConfigTypeSelect,
+			Title:       plugin.MakeTranslator(i18n.ConfigACLTitle),
+			Description: plugin.MakeTranslator(i18n.ConfigACLDescription),
+			Required:    true,
+			Options: []plugin.ConfigFieldOption{
+				{
+					Label: plugin.MakeTranslator(i18n.ConfigACLOptionsDefault),
+					Value: "default",
+				},
+				{
+					Label: plugin.MakeTranslator(i18n.ConfigACLOptionsPublicRead),
+					Value: "public-read",
+				},
+			},
+			Value: s.Config.ACL,
 		},
 	}
 }

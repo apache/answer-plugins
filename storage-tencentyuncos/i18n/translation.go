@@ -35,6 +35,10 @@ const (
 	ConfigSecretKeyDescription       = "plugin.tencentyuncos_storage.backend.config.secret_key.description"
 	ConfigVisitUrlPrefixTitle        = "plugin.tencentyuncos_storage.backend.config.visit_url_prefix.title"
 	ConfigVisitUrlPrefixDescription  = "plugin.tencentyuncos_storage.backend.config.visit_url_prefix.description"
+	ConfigACLTitle                   = "plugin.tencentyuncos_storage.backend.config.acl.title"
+	ConfigACLDescription             = "plugin.tencentyuncos_storage.backend.config.acl.description"
+	ConfigACLOptionsDefault          = "plugin.tencentyuncos_storage.backend.config.acl.options.default"
+	ConfigACLOptionsPublicRead       = "plugin.tencentyuncos_storage.backend.config.acl.options.public_read"
 
 	ErrMisStorageConfig    = "plugin.tencentyuncos_storage.backend.err.mis_storage_config"
 	ErrFileNotFound        = "plugin.tencentyuncos_storage.backend.err.file_not_found"

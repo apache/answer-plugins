@@ -54,6 +54,16 @@ plugin:
             other: 访问URL前缀
           description:
             other: 上传文件最终访问地址的前缀，以 '/' 结尾 https://example.com/xxx/
+        acl:
+          title:
+            other: Object ACL
+          description:
+            other: 设置 Object ACL，默认和 Bucket 的读写权限一致，可修改为公共读。
+          options:
+            default:
+              other: 默认
+            public_read:
+              other: 公共读
       err:
         mis_storage_config:
           other: 错误的存储配置导致上传失败

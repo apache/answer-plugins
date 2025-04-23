@@ -54,6 +54,16 @@ plugin:
             other: Access URL prefix
           description:
             other: prefix of the final access address of the uploaded file, ending with '/' https://example.com/xxx/
+        acl:
+          title:
+            other: Object ACL
+          description:
+            other: Set Object ACL, default is consistent with the read and write permissions of the Bucket, can be modified to public read.
+          options:
+            default:
+              other: Default
+            public_read:
+              other: Public Read
       err:
         mis_storage_config:
           other: Wrong storage configuration causes upload failure.
