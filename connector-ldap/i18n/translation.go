@@ -20,7 +20,7 @@
 package i18n
 
 const (
-	ConnectorName   = "plugin.github_connector.backend.name"
-	InfoName        = "plugin.github_connector.backend.info.name"
-	InfoDescription = "plugin.github_connector.backend.info.description"
+	ConnectorName   = "plugin.ldap_connector.backend.name"
+	InfoName        = "plugin.ldap_connector.backend.info.name"
+	InfoDescription = "plugin.ldap_connector.backend.info.description"
 )
