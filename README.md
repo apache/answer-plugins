@@ -58,6 +58,12 @@ The Notification plugin helps us to send messages to third-party notification sy
 - [x] [Ding talk](https://github.com/apache/answer-plugins/tree/main/notification-dingtalk)
 - [x] [WeCom](https://github.com/apache/answer-plugins/tree/main/notification-wecom)
 
+### Sidebar
+
+Customize the sidebar tags or link.
+
+- [x] [Quicklinks](https://github.com/apache/answer-plugins/tree/main/quick-links)
+
 ### Route
 
 Support for custom routing.
