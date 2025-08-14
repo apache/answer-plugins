@@ -68,7 +68,7 @@ const Component = ({ navigate, request }) => {
 
       {links?.map((link) => {
         const name = link.split(',')[0]
-        const url = link.split(',')[1]
+        const url = link.split(',')[1]?.trim()
         if (!url || !name) {
           return null;
         }
