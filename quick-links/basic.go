@@ -70,6 +70,9 @@ func (e *QuickLinks) ConfigFields() []plugin.ConfigField {
 			Title:       plugin.MakeTranslator(i18n.ConfigLinksTitle),
 			Description: plugin.MakeTranslator(i18n.ConfigLinksDescription),
 			Value:       e.Config.LinksText,
+			UIOptions: plugin.ConfigFieldUIOptions{
+				Rows: "5",
+			},
 		},
 	}
 }
