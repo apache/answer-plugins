@@ -34,3 +34,5 @@ plugin:
             other: 链接
           description:
             other: 用英文逗号分隔标题和链接，每行一个链接：“title, URL”
+    frontend:
+      quick_links: 快速链接        
