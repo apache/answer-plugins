@@ -59,6 +59,7 @@ const Component = ({ navigate, request }) => {
         return (
           <a
             href={href}
+            key={href}
             className={`nav-link ${window.location.pathname === href ? 'active' : ''}`}
             onClick={handleNavigate}>
             <span>{tag.display_name}</span>
@@ -75,6 +76,7 @@ const Component = ({ navigate, request }) => {
         return (
           <a
             href={url}
+            key={url}
             className={`nav-link ${window.location.pathname === url ? 'active' : ''}`}
             onClick={handleNavigate}
           >
