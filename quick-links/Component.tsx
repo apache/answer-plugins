@@ -47,8 +47,8 @@ const Component = ({ navigate, request }) => {
     }
   }
 
-  if (!tags.length && !links.length) {
-    return
+  if (!tags.length && !data?.links_text) {
+    return null;
   }
 
   return (

@@ -20,7 +20,7 @@ plugin:
     backend:
       info:
         name:
-          other: Quick Links
+          other: Quicklinks
         description:
           other: Customize the sidebar tags or links
       config:
