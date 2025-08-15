@@ -35,4 +35,4 @@ plugin:
           description:
               other: Separate “title, URL” with commas. One link per line.
     frontend:
-        quick_links: Quick Links
+        quick_links: Quicklinks
