@@ -3,7 +3,7 @@ module github.com/apache/answer-plugins/quick-links
 go 1.23.3
 
 require (
-	github.com/apache/answer v1.7.0
+	github.com/apache/answer v1.6.0
 	github.com/apache/answer-plugins/util v1.0.3
 )
 
