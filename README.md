@@ -60,7 +60,7 @@ The Notification plugin helps us to send messages to third-party notification sy
 
 ### Sidebar
 
-Customize the sidebar tags or link.
+Add custom content on the sidebar navigation
 
 - [x] [Quicklinks](https://github.com/apache/answer-plugins/tree/main/quick-links)
 

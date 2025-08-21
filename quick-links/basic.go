@@ -23,6 +23,7 @@ package quick_links
 import (
 	"embed"
 	"encoding/json"
+
 	"github.com/apache/answer-plugins/quick-links/i18n"
 	"github.com/apache/answer-plugins/util"
 	"github.com/apache/answer/plugin"
@@ -71,7 +72,8 @@ func (e *QuickLinks) ConfigFields() []plugin.ConfigField {
 			Description: plugin.MakeTranslator(i18n.ConfigLinksDescription),
 			Value:       e.Config.LinksText,
 			UIOptions: plugin.ConfigFieldUIOptions{
-				Rows: "5",
+				Rows:      "5",
+				ClassName: "small font-monospace",
 			},
 		},
 	}
