@@ -17,6 +17,6 @@
 
 slug_name: quick_links
 type: sidebar
-version: 0.0.4
+version: 0.0.5
 author: answerdev
 link: https://github.com/apache/answer-plugins/tree/main/quick-links
