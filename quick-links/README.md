@@ -1,7 +1,5 @@
 # QuickLinks Plugin
 
-# QuickLinks Plugin
-
 QuickLinks is a sidebar plugin for [Apache Answer](https://github.com/apache/answer) that allows administrators to customize frequently used links and tags, improving community navigation efficiency.
 
 ## Features
