@@ -20,28 +20,28 @@
 package algolia
 
 import (
-	"github.com/algolia/algoliasearch-client-go/v3/algolia/opt"
-	"github.com/algolia/algoliasearch-client-go/v3/algolia/search"
+	"encoding/json"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 )
 
 // initSettings update algolia search settings
 func (s *SearchAlgolia) initSettings() (err error) {
 	var (
-		settings = search.Settings{}
+		settings = search.IndexSettings{}
 	)
-	err = settings.UnmarshalJSON(AlgoliaSearchServerConfig)
+	err = json.Unmarshal([]byte(AlgoliaSearchServerConfig), &settings)
 	if err != nil {
 		return
 	}
 
 	// point virtual index to sort
-	settings.Replicas = opt.Replicas(
-		"virtual("+s.getIndexName(NewestIndex)+")",
-		"virtual("+s.getIndexName(ActiveIndex)+")",
-		"virtual("+s.getIndexName(ScoreIndex)+")",
-	)
+	settings.Replicas = []string{
+		"virtual(" + s.getIndexName(NewestIndex) + ")",
+		"virtual(" + s.getIndexName(ActiveIndex) + ")",
+		"virtual(" + s.getIndexName(ScoreIndex) + ")",
+	}
 
-	_, err = s.getIndex("").SetSettings(settings, opt.ForwardToReplicas(true))
+	_, err = s.client.SetSettings(s.client.NewApiSetSettingsRequest(s.getIndexName(""), &settings).WithForwardToReplicas(true))
 	if err != nil {
 		return
 	}
@@ -51,33 +51,47 @@ func (s *SearchAlgolia) initSettings() (err error) {
 
 // initVirtualReplicaSetting init virtual index replica setting
 func (s *SearchAlgolia) initVirtualReplicaSetting() (err error) {
-
-	_, err = s.getIndex(NewestIndex).SetSettings(search.Settings{
-		CustomRanking: opt.CustomRanking(
-			"desc(created)",
-			"desc(content)",
-			"desc(title)"),
-	})
+	_, err = s.client.SetSettings(
+		s.client.NewApiSetSettingsRequest(
+			s.getIndexName(NewestIndex),
+			search.NewEmptyIndexSettings().
+				SetCustomRanking([]string{
+					"desc(created)",
+					"desc(content)",
+					"desc(title)",
+				}),
+		),
+	)
 	if err != nil {
 		return
 	}
 
-	_, err = s.getIndex(ActiveIndex).SetSettings(search.Settings{
-		CustomRanking: opt.CustomRanking(
-			"desc(active)",
-			"desc(content)",
-			"desc(title)"),
-	})
+	_, err = s.client.SetSettings(
+		s.client.NewApiSetSettingsRequest(
+			s.getIndexName(ActiveIndex),
+			search.NewEmptyIndexSettings().
+				SetCustomRanking([]string{
+					"desc(active)",
+					"desc(content)",
+					"desc(title)",
+				}),
+		),
+	)
 	if err != nil {
 		return
 	}
 
-	_, err = s.getIndex(ScoreIndex).SetSettings(search.Settings{
-		CustomRanking: opt.CustomRanking(
-			"desc(score)",
-			"desc(content)",
-			"desc(title)"),
-	})
+	_, err = s.client.SetSettings(
+		s.client.NewApiSetSettingsRequest(
+			s.getIndexName(ScoreIndex),
+			search.NewEmptyIndexSettings().
+				SetCustomRanking([]string{
+					"desc(score)",
+					"desc(content)",
+					"desc(title)",
+				}),
+		),
+	)
 	if err != nil {
 		return
 	}

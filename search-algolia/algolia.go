@@ -22,11 +22,13 @@ package algolia
 import (
 	"context"
 	"embed"
+	"encoding/json"
+	"github.com/segmentfault/pacman/log"
 	"strconv"
 	"strings"
+	"sync"
 
-	"github.com/algolia/algoliasearch-client-go/v3/algolia/opt"
-	"github.com/algolia/algoliasearch-client-go/v3/algolia/search"
+	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 	"github.com/apache/answer-plugins/search-algolia/i18n"
 	"github.com/apache/answer-plugins/util"
 	"github.com/apache/answer/plugin"
@@ -37,8 +39,9 @@ var Info embed.FS
 
 type SearchAlgolia struct {
 	Config *AlgoliaSearchConfig
-	client *search.Client
+	client *search.APIClient
 	syncer plugin.SearchSyncer
+	once   sync.Once
 }
 
 func init() {
@@ -109,23 +112,36 @@ func (s *SearchAlgolia) SearchContents(ctx context.Context, cond *plugin.SearchB
 
 	var (
 		query = strings.TrimSpace(strings.Join(cond.Words, " "))
-		opts  = []interface{}{
-			opt.AttributesToRetrieve("objectID", "type"),
-			opt.Filters(filters),
-			opt.Page(cond.Page - 1),
-			opt.HitsPerPage(cond.PageSize),
-		}
-		qres search.QueryRes
-	)
 
-	qres, err = s.getIndex(string(cond.Order)).Search(query, opts...)
+		qres *search.SearchResponse
+	)
+	qres, err = s.client.SearchSingleIndex(
+		s.client.NewApiSearchSingleIndexRequest(
+			s.getIndexName(string(cond.Order))).
+			WithSearchParams(
+				search.SearchParamsObjectAsSearchParams(
+					search.NewEmptySearchParamsObject().
+						SetQuery(query).
+						SetAttributesToRetrieve([]string{"objectID", "type"}).
+						SetFilters(filters).
+						SetPage(int32(cond.Page - 1)).
+						SetHitsPerPage(int32(cond.PageSize)),
+				),
+			),
+	)
+	if err != nil {
+		return
+	}
+	if qres == nil {
+		return
+	}
 	for _, hit := range qres.Hits {
 		res = append(res, plugin.SearchResult{
-			ID:   hit["objectID"].(string),
-			Type: hit["type"].(string),
+			ID:   hit.ObjectID,
+			Type: "question",
 		})
 	}
-	total = int64(qres.NbHits)
+	total = int64(*qres.NbHits)
 	return res, total, err
 }
 
@@ -172,24 +188,37 @@ func (s *SearchAlgolia) SearchQuestions(ctx context.Context, cond *plugin.Search
 
 	var (
 		query = strings.TrimSpace(strings.Join(cond.Words, " "))
-		opts  = []interface{}{
-			opt.AttributesToRetrieve("objectID", "type"),
-			opt.Filters(filters),
-			opt.Page(cond.Page - 1),
-			opt.HitsPerPage(cond.PageSize),
-		}
-		qres search.QueryRes
+		qres  *search.SearchResponse
 	)
 
-	qres, err = s.getIndex(string(cond.Order)).Search(query, opts...)
+	qres, err = s.client.SearchSingleIndex(
+		s.client.NewApiSearchSingleIndexRequest(
+			s.getIndexName(string(cond.Order))).
+			WithSearchParams(
+				search.SearchParamsObjectAsSearchParams(
+					search.NewEmptySearchParamsObject().
+						SetQuery(query).
+						SetAttributesToRetrieve([]string{"objectID", "type"}).
+						SetFilters(filters).
+						SetPage(int32(cond.Page - 1)).
+						SetHitsPerPage(int32(cond.PageSize)),
+				),
+			),
+	)
+	if err != nil {
+		return
+	}
+	if qres == nil {
+		return
+	}
 	for _, hit := range qres.Hits {
 		res = append(res, plugin.SearchResult{
-			ID:   hit["objectID"].(string),
-			Type: hit["type"].(string),
+			ID:   hit.ObjectID,
+			Type: "question",
 		})
 	}
 
-	total = int64(qres.NbHits)
+	total = int64(*qres.NbHits)
 	return res, total, err
 }
 
@@ -226,48 +255,67 @@ func (s *SearchAlgolia) SearchAnswers(ctx context.Context, cond *plugin.SearchBa
 
 	var (
 		query = strings.TrimSpace(strings.Join(cond.Words, " "))
-		opts  = []interface{}{
-			opt.AttributesToRetrieve("objectID", "type"),
-			opt.Filters(filters),
-			opt.Page(cond.Page - 1),
-			opt.HitsPerPage(cond.PageSize),
-		}
-		qres search.QueryRes
+		qres  *search.SearchResponse
 	)
 
-	qres, err = s.getIndex(string(cond.Order)).Search(query, opts...)
+	qres, err = s.client.SearchSingleIndex(
+		s.client.NewApiSearchSingleIndexRequest(
+			s.getIndexName(string(cond.Order))).
+			WithSearchParams(
+				search.SearchParamsObjectAsSearchParams(
+					search.NewEmptySearchParamsObject().
+						SetQuery(query).
+						SetAttributesToRetrieve([]string{"objectID", "type"}).
+						SetFilters(filters).
+						SetPage(int32(cond.Page - 1)).
+						SetHitsPerPage(int32(cond.PageSize)),
+				),
+			),
+	)
 	for _, hit := range qres.Hits {
 		res = append(res, plugin.SearchResult{
-			ID:   hit["objectID"].(string),
-			Type: hit["type"].(string),
+			ID:   hit.ObjectID,
+			Type: "question",
 		})
 	}
-	total = int64(qres.NbHits)
+	total = int64(*qres.NbHits)
 	return res, total, err
 }
 
 // UpdateContent updates the content to algolia server
 func (s *SearchAlgolia) UpdateContent(ctx context.Context, content *plugin.SearchContent) (err error) {
-	_, err = s.getIndex("").SaveObject(content)
+	var data map[string]any
+	j, err := json.Marshal(content)
+	if err != nil {
+		return
+	}
+
+	err = json.Unmarshal(j, &data)
+
+	_, err = s.client.SaveObject(s.client.NewApiSaveObjectRequest(s.getIndexName(""), data))
+	if err != nil {
+		return
+	}
+
 	return
 }
 
 // DeleteContent deletes the content
 func (s *SearchAlgolia) DeleteContent(ctx context.Context, contentID string) (err error) {
-	_, err = s.getIndex("").DeleteObject(contentID)
+	_, err = s.client.DeleteObject(s.client.NewApiDeleteObjectRequest(s.getIndexName(""), contentID))
 	return
 }
 
 // connect connect to algolia server
 func (s *SearchAlgolia) connect() (err error) {
-	s.client = search.NewClient(s.Config.APPID, s.Config.APIKey)
+	s.once.Do(func() {
+		s.client, err = search.NewClient(s.Config.APPID, s.Config.APIKey)
+		if err != nil {
+			log.Error("algolia: connect error", err)
+		}
+		log.Info("algolia: connected")
+	})
 	return
-}
-
-// init or create index
-func (s *SearchAlgolia) getIndex(order string) (index *search.Index) {
-	idx := s.getIndexName(order)
-	return s.client.InitIndex(idx)
 }
 
 func (s *SearchAlgolia) getIndexName(order string) string {
