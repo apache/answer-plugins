@@ -21,7 +21,6 @@ package algolia
 
 import (
 	"context"
-	"encoding/json"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 	"github.com/apache/answer/plugin"
 	"github.com/segmentfault/pacman/log"
@@ -78,13 +77,9 @@ func (s *SearchAlgolia) batchUpdateContent(ctx context.Context, contents []*plug
 
 	// Prepare your records as a slice of map[string]any
 	var records []map[string]any
-	jsonRecords, err := json.Marshal(contents)
-	if err != nil {
-		return
-	}
-	err = json.Unmarshal(jsonRecords, &records)
-	if err != nil {
-		return
+	for _, content := range contents {
+		record := s.parseRecordData(content)
+		records = append(records, record)
 	}
 
 	// Batch insert with transformation (API v4)

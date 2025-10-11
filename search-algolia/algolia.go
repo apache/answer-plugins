@@ -22,8 +22,8 @@ package algolia
 import (
 	"context"
 	"embed"
-	"encoding/json"
 	"github.com/segmentfault/pacman/log"
+	"reflect"
 	"strconv"
 	"strings"
 	"sync"
@@ -138,7 +138,7 @@ func (s *SearchAlgolia) SearchContents(ctx context.Context, cond *plugin.SearchB
 	for _, hit := range qres.Hits {
 		res = append(res, plugin.SearchResult{
 			ID:   hit.ObjectID,
-			Type: "question",
+			Type: hit.AdditionalProperties["type"].(string),
 		})
 	}
 	total = int64(*qres.NbHits)
@@ -214,7 +214,7 @@ func (s *SearchAlgolia) SearchQuestions(ctx context.Context, cond *plugin.Search
 	for _, hit := range qres.Hits {
 		res = append(res, plugin.SearchResult{
 			ID:   hit.ObjectID,
-			Type: "question",
+			Type: hit.AdditionalProperties["type"].(string),
 		})
 	}
 
@@ -272,10 +272,13 @@ func (s *SearchAlgolia) SearchAnswers(ctx context.Context, cond *plugin.SearchBa
 				),
 			),
 	)
+	if err != nil {
+		return
+	}
 	for _, hit := range qres.Hits {
 		res = append(res, plugin.SearchResult{
 			ID:   hit.ObjectID,
-			Type: "question",
+			Type: hit.AdditionalProperties["type"].(string),
 		})
 	}
 	total = int64(*qres.NbHits)
@@ -284,15 +287,8 @@ func (s *SearchAlgolia) SearchAnswers(ctx context.Context, cond *plugin.SearchBa
 
 // UpdateContent updates the content to algolia server
 func (s *SearchAlgolia) UpdateContent(ctx context.Context, content *plugin.SearchContent) (err error) {
-	var data map[string]any
-	j, err := json.Marshal(content)
-	if err != nil {
-		return
-	}
-
-	err = json.Unmarshal(j, &data)
-
-	_, err = s.client.SaveObject(s.client.NewApiSaveObjectRequest(s.getIndexName(""), data))
+	record := s.parseRecordData(content)
+	_, err = s.client.SaveObject(s.client.NewApiSaveObjectRequest(s.getIndexName(""), record))
 	if err != nil {
 		return
 	}
@@ -333,4 +329,31 @@ func (s *SearchAlgolia) getIndexName(order string) string {
 		idx = idx + "_" + ScoreIndex
 	}
 	return idx
+}
+
+func (s *SearchAlgolia) parseRecordData(content *plugin.SearchContent) (contentMap map[string]any) {
+	// 使用反射将结构体转换为map
+	contentMap = make(map[string]any)
+	val := reflect.ValueOf(content).Elem() // 获取指针指向的实际结构体
+	typ := val.Type()
+
+	// each struct field
+	for i := 0; i < val.NumField(); i++ {
+		field := val.Field(i)
+		// fetch json tag name, if not exist use field name
+		fieldName := typ.Field(i).Name
+		jsonTag := typ.Field(i).Tag.Get("json")
+		if jsonTag != "" {
+			parts := strings.Split(jsonTag, ",")
+			if parts[0] != "-" && parts[0] != "" {
+				fieldName = parts[0]
+			}
+		}
+
+		// only set the field that can be interfaced
+		if field.CanInterface() {
+			contentMap[fieldName] = field.Interface()
+		}
+	}
+	return
 }
