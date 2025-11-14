@@ -81,6 +81,11 @@
       "link": "https://github.com/apache/answer-plugins/tree/main/notification-wecom"
     },
     {
+      "name": "快捷链接",
+      "desc": "自定义侧边栏标签或链接",
+      "link": "https://github.com/apache/answer-plugins/tree/main/quick-links"
+    },
+    {
       "name": "代码高亮",
       "desc": "高亮显示 Markdown 内容中的代码块",
       "link": "https://github.com/apache/answer-plugins/tree/main/render-markdown-codehighlight"
@@ -221,6 +226,11 @@
       "name": "Wecom Notification",
       "desc": "Send notifications to Wecom",
       "link": "https://github.com/apache/answer-plugins/tree/main/notification-wecom"
+    },
+    {
+      "name": "Quicklinks",
+      "desc": "Customize the sidebar tags or links",
+      "link": "https://github.com/apache/answer-plugins/tree/main/quick-links"
     },
     {
       "name": "Code Highlight",
