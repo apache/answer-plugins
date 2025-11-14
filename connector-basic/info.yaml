@@ -17,6 +17,6 @@
 
 slug_name: basic_connector
 type: connector
-version: 1.2.11
+version: 1.2.12
 author: answerdev
 link: https://github.com/apache/answer-plugins/tree/main/connector-basic
