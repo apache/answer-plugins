@@ -1,20 +1,19 @@
 {
-  "name": "connector-wallet",
-  "version": "1.0.2",
-  "description": "Connect to Web3 wallet for third-party login",
-  "author": "Ourai L. <ourairyu@gmail.com>",
+  "name": "editor-stacks",
+  "version": "0.0.1",
+  "description": "",
   "type": "module",
   "files": [
     "dist",
     "README.md"
   ],
-  "main": "./dist/connector-wallet.umd.js",
-  "module": "./dist/connector-wallet.es.js",
-  "types": "./dist/connector-wallet.d.ts",
+  "main": "./dist/editor-stacks.umd.js",
+  "module": "./dist/editor-stacks.es.js",
+  "types": "./dist/editor-stacks.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/connector-wallet.es.js",
-      "require": "./dist/connector-wallet.umd.js"
+      "import": "./dist/editor-stacks.es.js",
+      "require": "./dist/editor-stacks.umd.js"
     }
   },
   "scripts": {
@@ -23,17 +22,11 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "peerDependencies": {
-    "@types/react": "^18.0.17",
-    "js-sha256": "0.11.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.0",
     "react-dom": "^18.2.0",
-    "react-i18next": "^11.18.3"
-  },
-  "peerDependenciesMeta": {
-    "@types/react": {
-      "optional": true
-    }
+    "react-i18next": "^11.18.3",
+    "prosemirror-state": "*"
   },
   "devDependencies": {
     "@modyfi/vite-plugin-yaml": "^1.1.0",
@@ -43,15 +36,15 @@
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "postcss": "^8.4.47",
+    "postcss-prefix-selector": "^1.16.0",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
-    "vite-plugin-css-injected-by-js": "^3.3.0",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
     "vite-plugin-dts": "^3.9.1"
   },
   "dependencies": {
-    "@rainbow-me/rainbowkit": "^2.2.0",
-    "@tanstack/react-query": "^5.59.15",
-    "viem": "2.x",
-    "wagmi": "^2.12.19"
+    "@stackoverflow/stacks": "^2.8.6",
+    "@stackoverflow/stacks-editor": "^0.15.3"
   }
 }
