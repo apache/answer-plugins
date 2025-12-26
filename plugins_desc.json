@@ -61,6 +61,11 @@
       "link": "https://github.com/apache/answer-plugins/tree/main/editor-formula"
     },
     {
+      "name": "Stacks 编辑器",
+      "desc": "Stacks 编辑器插件",
+      "link": "https://github.com/apache/answer-plugins/tree/main/editor-stacks"
+    },
+    {
       "name": "内容嵌入",
       "desc": "在内容中嵌入其他网站",
       "link": "https://github.com/apache/answer-plugins/tree/main/embed-basic"
@@ -79,6 +84,11 @@
       "name": "企业微信通知",
       "desc": "发送通知到企业微信",
       "link": "https://github.com/apache/answer-plugins/tree/main/notification-wecom"
+    },
+    {
+      "name": "快捷链接",
+      "desc": "自定义侧边栏标签或链接",
+      "link": "https://github.com/apache/answer-plugins/tree/main/quick-links"
     },
     {
       "name": "代码高亮",
@@ -203,6 +213,11 @@
       "link": "https://github.com/apache/answer-plugins/tree/main/editor-formula"
     },
     {
+      "name": "Stacks Editor",
+      "desc": "Stacks Editor Plugin",
+      "link": "https://github.com/apache/answer-plugins/tree/main/editor-stacks"
+    },
+    {
       "name": "Embed",
       "desc": "Embed content from other sites",
       "link": "https://github.com/apache/answer-plugins/tree/main/embed-basic"
@@ -221,6 +236,11 @@
       "name": "Wecom Notification",
       "desc": "Send notifications to Wecom",
       "link": "https://github.com/apache/answer-plugins/tree/main/notification-wecom"
+    },
+    {
+      "name": "Quicklinks",
+      "desc": "Customize the sidebar tags or links",
+      "link": "https://github.com/apache/answer-plugins/tree/main/quick-links"
     },
     {
       "name": "Code Highlight",
