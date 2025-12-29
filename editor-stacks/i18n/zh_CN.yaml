@@ -15,8 +15,11 @@
 # specific language governing permissions and limitations
 # under the License.
 
-slug_name: quick_links
-type: sidebar
-version: 1.0.2
-author: answerdev
-link: https://github.com/apache/answer-plugins/tree/main/quick-links
+plugin:
+  editor_stacks:
+    backend:
+      info:
+        name:
+          other: Stacks 编辑器
+        description:
+          other: Stacks 编辑器插件
