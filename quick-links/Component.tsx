@@ -17,10 +17,31 @@
  * under the License.
  */
 
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import useSWR from 'swr'
 
-const Component = ({ navigate, request }) => {
+interface Tag {
+  slug_name: string;
+  display_name: string;
+}
+
+interface SidebarConfigData {
+  tags?: Tag[];
+  links_text?: string;
+}
+
+interface ComponentProps {
+  navigate: (url: string) => void;
+  request: {
+    instance: {
+      get: (url: string) => Promise<SidebarConfigData>;
+    };
+  };
+  hasDivider?: boolean;
+}
+
+const Component = ({ navigate, request, hasDivider }: ComponentProps) => {
 
   const { t } = useTranslation('plugin', {
     keyPrefix: 'quick_links.frontend',
@@ -33,7 +54,7 @@ const Component = ({ navigate, request }) => {
   const tags = data?.tags || [];
   const links = data?.links_text?.split('\n') || [];
 
-  const handleNavigate = (e) => {
+  const handleNavigate = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     e.stopPropagation();
     const url = e.currentTarget.getAttribute('href');
@@ -54,8 +75,9 @@ const Component = ({ navigate, request }) => {
 
   return (
     <div>
+      {hasDivider && <div className="border-top mt-3" />}
       <div className="py-2 px-3 mt-3 small fw-bold quick-link">{t('quick_links')}</div>
-      {tags?.map((tag) => {
+      {tags?.map((tag: Tag) => {
         const href = `/tags/${encodeURIComponent(tag.slug_name)}`
         return (
           <a
@@ -68,7 +90,7 @@ const Component = ({ navigate, request }) => {
         )
       })}
 
-      {links?.map((link) => {
+      {links?.map((link: string) => {
         const name = link.split(',')[0]
         const url = link.split(',')[1]?.trim()
         if (!url || !name) {
