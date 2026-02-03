@@ -16,3 +16,11 @@
 - `Access Key Secret` - AccessKeySecret of the S3
 - `Access Token` - AccessToken of the S3
 - `Visit Url Prefix` - Prefix of access address for the uploaded file, ending with '/' such as https://example.com/xxx/
+
+### Notes
+
+#### DigitalOcean
+
+If using a DigitalOcean Spaces Object Storage, you must set the following environment
+variable: `ACL_PUBLIC_READ=true`. Without this environment variable set, uploads will
+not be publicly readable. See also [#97](https://github.com/apache/answer-plugins/issues/97).
