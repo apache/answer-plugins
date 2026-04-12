@@ -1,0 +1,51 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+plugin:
+  memory_vector_search:
+    backend:
+      info:
+        name:
+          other: 内存向量搜索
+        description:
+          other: 轻量级内存向量搜索，适用于开发和测试（无外部依赖）
+      config:
+        api_host:
+          title:
+            other: Embedding API 地址
+          description:
+            other: "用于生成 Embedding 的 OpenAI 兼容 API 地址（如 https://api.openai.com）"
+        api_key:
+          title:
+            other: Embedding API 密钥
+          description:
+            other: Embedding 服务的 API 密钥
+        embedding_model:
+          title:
+            other: Embedding 模型
+          description:
+            other: "Embedding 模型名称（如 text-embedding-3-small）"
+        embedding_level:
+          title:
+            other: Embedding 级别
+          description:
+            other: "选择 'question' 将问题+所有回答+评论合并嵌入，或 'answer' 将每个回答单独嵌入"
+        similarity_threshold:
+          title:
+            other: 相似度阈值
+          description:
+            other: "搜索结果的最低余弦相似度分数（0-1）。默认为 0（不过滤）。"
