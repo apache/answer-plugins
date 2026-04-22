@@ -32,8 +32,10 @@ const (
 	ConfigEmbeddingModelTitle       = "plugin.memory_vector_search.backend.config.embedding_model.title"
 	ConfigEmbeddingModelDescription = "plugin.memory_vector_search.backend.config.embedding_model.description"
 
-	ConfigEmbeddingLevelTitle       = "plugin.memory_vector_search.backend.config.embedding_level.title"
-	ConfigEmbeddingLevelDescription = "plugin.memory_vector_search.backend.config.embedding_level.description"
+	ConfigEmbeddingLevelTitle          = "plugin.memory_vector_search.backend.config.embedding_level.title"
+	ConfigEmbeddingLevelDescription    = "plugin.memory_vector_search.backend.config.embedding_level.description"
+	ConfigEmbeddingLevelOptionQuestion = "plugin.memory_vector_search.backend.config.embedding_level.options.question"
+	ConfigEmbeddingLevelOptionAnswer   = "plugin.memory_vector_search.backend.config.embedding_level.options.answer"
 
 	ConfigSimilarityThresholdTitle       = "plugin.memory_vector_search.backend.config.similarity_threshold.title"
 	ConfigSimilarityThresholdDescription = "plugin.memory_vector_search.backend.config.similarity_threshold.description"

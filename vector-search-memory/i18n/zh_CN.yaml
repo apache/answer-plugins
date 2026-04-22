@@ -44,6 +44,11 @@ plugin:
             other: Embedding 级别
           description:
             other: "选择 'question' 将问题+所有回答+评论合并嵌入，或 'answer' 将每个回答单独嵌入"
+          options:
+            question:
+              other: 问题
+            answer:
+              other: 回答
         similarity_threshold:
           title:
             other: 相似度阈值

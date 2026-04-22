@@ -245,8 +245,8 @@ func (e *VectorSearchEngine) ConfigFields() []plugin.ConfigField {
 			Description: plugin.MakeTranslator(i18n.ConfigEmbeddingLevelDescription),
 			Required:    true,
 			Options: []plugin.ConfigFieldOption{
-				{Label: plugin.MakeTranslator(i18n.ConfigEmbeddingLevelTitle), Value: "question"},
-				{Label: plugin.MakeTranslator(i18n.ConfigEmbeddingLevelTitle), Value: "answer"},
+				{Label: plugin.MakeTranslator(i18n.ConfigEmbeddingLevelOptionQuestion), Value: "question"},
+				{Label: plugin.MakeTranslator(i18n.ConfigEmbeddingLevelOptionAnswer), Value: "answer"},
 			},
 			Value: e.Config.EmbeddingLevel,
 		},

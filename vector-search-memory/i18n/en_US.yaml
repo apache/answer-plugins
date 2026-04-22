@@ -44,6 +44,11 @@ plugin:
             other: Embedding Level
           description:
             other: "Choose 'question' to embed question + all answers + comments, or 'answer' to embed each answer separately"
+          options:
+            question:
+              other: Question
+            answer:
+              other: Answer
         similarity_threshold:
           title:
             other: Similarity Threshold
