@@ -1,146 +1,4 @@
 {
-  "zh_CN": [
-    {
-      "name": "Redis缓存",
-      "desc": "使用Redis作为缓存",
-      "link": "https://github.com/apache/answer-plugins/tree/main/cache-redis"
-    },
-    {
-      "name": "基础验证码",
-      "desc": "默认图形验证码",
-      "link": "https://github.com/apache/answer-plugins/tree/main/captcha-basic"
-    },
-    {
-      "name": "Google reCAPTCHA v2",
-      "desc": "Google reCAPTCHA v2 插件",
-      "link": "https://github.com/apache/answer-plugins/tree/main/captcha-google-v2"
-    },
-    {
-      "name": "阿里云CDN",
-      "desc": "通过阿里云CDN提升静态资源加速",
-      "link": "https://github.com/apache/answer-plugins/tree/main/cdn-aliyun"
-    },
-    {
-      "name": "Amazon CloudFront",
-      "desc": "通过AWS CDN提升静态资源加速",
-      "link": "https://github.com/apache/answer-plugins/tree/main/cdn-s3"
-    },
-    {
-      "name": "Apache 连接器",
-      "desc": "用于接入 Apache Oauth",
-      "link": "https://github.com/apache/answer-plugins/tree/main/connector-apache"
-    },
-    {
-      "name": "通用连接器",
-      "desc": "适用于各种 OAuth 登录的通用插件",
-      "link": "https://github.com/apache/answer-plugins/tree/main/connector-basic"
-    },
-    {
-      "name": "钉钉连接器",
-      "desc": "用于接入钉钉第三方登录",
-      "link": "https://github.com/apache/answer-plugins/tree/main/connector-dingtalk"
-    },
-    {
-      "name": "Google 连接器",
-      "desc": "用于接入 Google 第三方登录",
-      "link": "https://github.com/apache/answer-plugins/tree/main/connector-google"
-    },
-    {
-      "name": "Wallet 连接器",
-      "desc": "用于接入 Wallet 第三方登录",
-      "link": "https://github.com/apache/answer-plugins/tree/main/connector-wallet"
-    },
-    {
-      "name": "图表编辑器",
-      "desc": "在编辑器中渲染图表",
-      "link": "https://github.com/apache/answer-plugins/tree/main/editor-chart"
-    },
-    {
-      "name": "公式编辑器",
-      "desc": "在编辑器中渲染公式",
-      "link": "https://github.com/apache/answer-plugins/tree/main/editor-formula"
-    },
-    {
-      "name": "内容嵌入",
-      "desc": "在内容中嵌入其他网站",
-      "link": "https://github.com/apache/answer-plugins/tree/main/embed-basic"
-    },
-    {
-      "name": "钉钉通知",
-      "desc": "发送通知到钉钉",
-      "link": "https://github.com/apache/answer-plugins/tree/main/notification-dingtalk"
-    },
-    {
-      "name": "Slack 通知",
-      "desc": "发送通知到 Slack",
-      "link": "https://github.com/apache/answer-plugins/tree/main/notification-slack"
-    },
-    {
-      "name": "企业微信通知",
-      "desc": "发送通知到企业微信",
-      "link": "https://github.com/apache/answer-plugins/tree/main/notification-wecom"
-    },
-    {
-      "name": "代码高亮",
-      "desc": "高亮显示 Markdown 内容中的代码块",
-      "link": "https://github.com/apache/answer-plugins/tree/main/render-markdown-codehighlight"
-    },
-    {
-      "name": "Akismet 反垃圾",
-      "desc": "Akismet 反垃圾用于检查帖子和评论内容，以确定它们是否像垃圾内容。",
-      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-akismet"
-    },
-    {
-      "name": "百度反垃圾",
-      "desc": "百度反垃圾用于检查帖子和评论内容，通过百度内容审核平台查看它们是否像垃圾内容。",
-      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-baidu"
-    },
-    {
-      "name": "基础审核插件",
-      "desc": "基础的通用审核插件",
-      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-basic"
-    },
-    {
-      "name": "Algolia 搜索",
-      "desc": "使用 Algolia 作为搜索引擎.",
-      "link": "https://github.com/apache/answer-plugins/tree/main/search-algolia"
-    },
-    {
-      "name": "Elasticsearch 引擎",
-      "desc": "使用 Elasticsearch 作为搜索引擎",
-      "link": "https://github.com/apache/answer-plugins/tree/main/search-elasticsearch"
-    },
-    {
-      "name": "MeiliSearch",
-      "desc": "MeiliSearch 是一个强大、快速、开源、易于使用和部署的搜索引擎。",
-      "link": "https://github.com/apache/answer-plugins/tree/main/search-meilisearch"
-    },
-    {
-      "name": "阿里云OSS存储",
-      "desc": "上传文件到阿里云OSS存储",
-      "link": "https://github.com/apache/answer-plugins/tree/main/storage-aliyunoss"
-    },
-    {
-      "name": "S3 存储",
-      "desc": "上传文件到S3存储",
-      "link": "https://github.com/apache/answer-plugins/tree/main/storage-s3"
-    },
-    {
-      "name": "腾讯云COS对象存储",
-      "desc": "上传文件到腾讯云COS对象存储",
-      "link": "https://github.com/apache/answer-plugins/tree/main/storage-tencentyuncos"
-    },
-    {
-      "name": "Slack",
-      "desc": "通过 Slack 进行登录",
-      "link": "https://github.com/apache/answer-plugins/tree/main/user-center-slack"
-    },
-    {
-      "name": "企业微信",
-      "desc": "从企业微信获取用户信息并同步到用户中心",
-      "link": "https://github.com/apache/answer-plugins/tree/main/user-center-wecom"
-    }
-  ],
   "en_US": [
     {
       "name": "Redis Cache",
@@ -203,6 +61,11 @@
       "link": "https://github.com/apache/answer-plugins/tree/main/editor-formula"
     },
     {
+      "name": "Stacks Editor",
+      "desc": "Stacks Editor Plugin",
+      "link": "https://github.com/apache/answer-plugins/tree/main/editor-stacks"
+    },
+    {
       "name": "Embed",
       "desc": "Embed content from other sites",
       "link": "https://github.com/apache/answer-plugins/tree/main/embed-basic"
@@ -221,6 +84,11 @@
       "name": "Wecom Notification",
       "desc": "Send notifications to Wecom",
       "link": "https://github.com/apache/answer-plugins/tree/main/notification-wecom"
+    },
+    {
+      "name": "Quicklinks",
+      "desc": "Customize the sidebar tags or links",
+      "link": "https://github.com/apache/answer-plugins/tree/main/quick-links"
     },
     {
       "name": "Code Highlight",
@@ -281,6 +149,168 @@
       "name": "WeCom",
       "desc": "Get user info from WeCom and sync to User Center",
       "link": "https://github.com/apache/answer-plugins/tree/main/user-center-wecom"
+    },
+    {
+      "name": "In-Memory Vector Search",
+      "desc": "Lightweight in-memory vector search for development and testing (no external dependencies)",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-memory"
+    }
+  ],
+  "zh_CN": [
+    {
+      "name": "Redis缓存",
+      "desc": "使用Redis作为缓存",
+      "link": "https://github.com/apache/answer-plugins/tree/main/cache-redis"
+    },
+    {
+      "name": "基础验证码",
+      "desc": "默认图形验证码",
+      "link": "https://github.com/apache/answer-plugins/tree/main/captcha-basic"
+    },
+    {
+      "name": "Google reCAPTCHA v2",
+      "desc": "Google reCAPTCHA v2 插件",
+      "link": "https://github.com/apache/answer-plugins/tree/main/captcha-google-v2"
+    },
+    {
+      "name": "阿里云CDN",
+      "desc": "通过阿里云CDN提升静态资源加速",
+      "link": "https://github.com/apache/answer-plugins/tree/main/cdn-aliyun"
+    },
+    {
+      "name": "Amazon CloudFront",
+      "desc": "通过AWS CDN提升静态资源加速",
+      "link": "https://github.com/apache/answer-plugins/tree/main/cdn-s3"
+    },
+    {
+      "name": "Apache 连接器",
+      "desc": "用于接入 Apache Oauth",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-apache"
+    },
+    {
+      "name": "通用连接器",
+      "desc": "适用于各种 OAuth 登录的通用插件",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-basic"
+    },
+    {
+      "name": "钉钉连接器",
+      "desc": "用于接入钉钉第三方登录",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-dingtalk"
+    },
+    {
+      "name": "Google 连接器",
+      "desc": "用于接入 Google 第三方登录",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-google"
+    },
+    {
+      "name": "Wallet 连接器",
+      "desc": "用于接入 Wallet 第三方登录",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-wallet"
+    },
+    {
+      "name": "图表编辑器",
+      "desc": "在编辑器中渲染图表",
+      "link": "https://github.com/apache/answer-plugins/tree/main/editor-chart"
+    },
+    {
+      "name": "公式编辑器",
+      "desc": "在编辑器中渲染公式",
+      "link": "https://github.com/apache/answer-plugins/tree/main/editor-formula"
+    },
+    {
+      "name": "Stacks 编辑器",
+      "desc": "Stacks 编辑器插件",
+      "link": "https://github.com/apache/answer-plugins/tree/main/editor-stacks"
+    },
+    {
+      "name": "内容嵌入",
+      "desc": "在内容中嵌入其他网站",
+      "link": "https://github.com/apache/answer-plugins/tree/main/embed-basic"
+    },
+    {
+      "name": "钉钉通知",
+      "desc": "发送通知到钉钉",
+      "link": "https://github.com/apache/answer-plugins/tree/main/notification-dingtalk"
+    },
+    {
+      "name": "Slack 通知",
+      "desc": "发送通知到 Slack",
+      "link": "https://github.com/apache/answer-plugins/tree/main/notification-slack"
+    },
+    {
+      "name": "企业微信通知",
+      "desc": "发送通知到企业微信",
+      "link": "https://github.com/apache/answer-plugins/tree/main/notification-wecom"
+    },
+    {
+      "name": "快捷链接",
+      "desc": "自定义侧边栏标签或链接",
+      "link": "https://github.com/apache/answer-plugins/tree/main/quick-links"
+    },
+    {
+      "name": "代码高亮",
+      "desc": "高亮显示 Markdown 内容中的代码块",
+      "link": "https://github.com/apache/answer-plugins/tree/main/render-markdown-codehighlight"
+    },
+    {
+      "name": "Akismet 反垃圾",
+      "desc": "Akismet 反垃圾用于检查帖子和评论内容，以确定它们是否像垃圾内容。",
+      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-akismet"
+    },
+    {
+      "name": "百度反垃圾",
+      "desc": "百度反垃圾用于检查帖子和评论内容，通过百度内容审核平台查看它们是否像垃圾内容。",
+      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-baidu"
+    },
+    {
+      "name": "基础审核插件",
+      "desc": "基础的通用审核插件",
+      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-basic"
+    },
+    {
+      "name": "Algolia 搜索",
+      "desc": "使用 Algolia 作为搜索引擎.",
+      "link": "https://github.com/apache/answer-plugins/tree/main/search-algolia"
+    },
+    {
+      "name": "Elasticsearch 引擎",
+      "desc": "使用 Elasticsearch 作为搜索引擎",
+      "link": "https://github.com/apache/answer-plugins/tree/main/search-elasticsearch"
+    },
+    {
+      "name": "MeiliSearch",
+      "desc": "MeiliSearch 是一个强大、快速、开源、易于使用和部署的搜索引擎。",
+      "link": "https://github.com/apache/answer-plugins/tree/main/search-meilisearch"
+    },
+    {
+      "name": "阿里云OSS存储",
+      "desc": "上传文件到阿里云OSS存储",
+      "link": "https://github.com/apache/answer-plugins/tree/main/storage-aliyunoss"
+    },
+    {
+      "name": "S3 存储",
+      "desc": "上传文件到S3存储",
+      "link": "https://github.com/apache/answer-plugins/tree/main/storage-s3"
+    },
+    {
+      "name": "腾讯云COS对象存储",
+      "desc": "上传文件到腾讯云COS对象存储",
+      "link": "https://github.com/apache/answer-plugins/tree/main/storage-tencentyuncos"
+    },
+    {
+      "name": "Slack",
+      "desc": "通过 Slack 进行登录",
+      "link": "https://github.com/apache/answer-plugins/tree/main/user-center-slack"
+    },
+    {
+      "name": "企业微信",
+      "desc": "从企业微信获取用户信息并同步到用户中心",
+      "link": "https://github.com/apache/answer-plugins/tree/main/user-center-wecom"
+    },
+    {
+      "name": "内存向量搜索",
+      "desc": "轻量级内存向量搜索，适用于开发和测试（无外部依赖）",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-memory"
     }
   ]
 }
