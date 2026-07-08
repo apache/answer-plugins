@@ -382,17 +382,35 @@ func (e *VectorSearchEngine) ConfigReceiver(config []byte) error {
 
 // ensureIndex creates the ES index with dense_vector mapping if it doesn't exist.
 func (e *VectorSearchEngine) ensureIndex(ctx context.Context) error {
+	dims := e.embeddingDimensions
+	if dims <= 0 {
+		dims = 1536
+	}
+
 	exists, err := e.client.IndexExists(indexName).Do(ctx)
 	if err != nil {
 		return err
 	}
+
 	if exists {
-		return nil
+		// If the existing index's embedding dimensions differ from the
+		// configured ones (e.g. the embedding model changed), delete it so it
+		// can be recreated with the new dimensions.
+		existingDims, err := e.indexEmbeddingDims(ctx)
+		if err != nil {
+			return fmt.Errorf("get index mapping: %w", err)
+		}
+		if existingDims > 0 && existingDims != dims {
+			log.Warnf("es-vector: dimensions changed from %d to %d, recreating index", existingDims, dims)
+			if _, err := e.client.DeleteIndex(indexName).Do(ctx); err != nil {
+				return fmt.Errorf("delete index for dimension change: %w", err)
+			}
+			exists = false
+		}
 	}
 
-	dims := e.embeddingDimensions
-	if dims <= 0 {
-		dims = 1536
+	if exists {
+		return nil
 	}
 
 	mapping := fmt.Sprintf(`{
@@ -416,3 +434,36 @@ func (e *VectorSearchEngine) ensureIndex(ctx context.Context) error {
 	_, err = e.client.CreateIndex(indexName).Body(mapping).Do(ctx)
 	return err
 }
+
+// indexEmbeddingDims returns the configured `dims` of the embedding field in the
+// existing index mapping, or 0 if it cannot be determined.
+func (e *VectorSearchEngine) indexEmbeddingDims(ctx context.Context) (int, error) {
+	m, err := e.client.GetMapping().Index(indexName).Do(ctx)
+	if err != nil {
+		return 0, err
+	}
+	// Response shape:
+	// { "<index>": { "mappings": { "properties": { "embedding": { "dims": N } } } } }
+	idx, ok := m[indexName].(map[string]interface{})
+	if !ok {
+		return 0, nil
+	}
+	mappings, ok := idx["mappings"].(map[string]interface{})
+	if !ok {
+		return 0, nil
+	}
+	props, ok := mappings["properties"].(map[string]interface{})
+	if !ok {
+		return 0, nil
+	}
+	embedding, ok := props["embedding"].(map[string]interface{})
+	if !ok {
+		return 0, nil
+	}
+	dims, ok := embedding["dims"].(float64)
+	if !ok {
+		return 0, nil
+	}
+	return int(dims), nil
+}
+
