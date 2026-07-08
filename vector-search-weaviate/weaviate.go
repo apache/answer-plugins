@@ -24,7 +24,9 @@ import (
 	"crypto/sha1"
 	"embed"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"net/http"
 	"strconv"
 	"strings"
 	"sync"
@@ -35,6 +37,7 @@ import (
 	"github.com/segmentfault/pacman/log"
 	"github.com/weaviate/weaviate-go-client/v4/weaviate"
 	"github.com/weaviate/weaviate-go-client/v4/weaviate/auth"
+	"github.com/weaviate/weaviate-go-client/v4/weaviate/fault"
 	"github.com/weaviate/weaviate-go-client/v4/weaviate/graphql"
 	"github.com/weaviate/weaviate/entities/models"
 )
@@ -439,10 +442,11 @@ func (e *VectorSearchEngine) ConfigReceiver(config []byte) error {
 	e.client = client
 
 	// Create/ensure the class with vector configuration.
-	// If it fails with auth error and API key was set, retry without auth (anonymous access).
+	// If it fails with an auth error (401/403) and an API key was set, retry
+	// without auth in case the server is running in anonymous-access mode.
 	if err := e.ensureClass(context.Background()); err != nil {
-		if conf.APIKey != "" {
-			log.Debugf("weaviate: ensureClass failed with API key auth, retrying without auth (anonymous access)")
+		if conf.APIKey != "" && isAuthError(err) {
+			log.Debugf("weaviate: ensureClass failed with auth error, retrying without auth (anonymous access)")
 			cfg.AuthConfig = nil
 			client, err = weaviate.NewClient(cfg)
 			if err != nil {
@@ -458,6 +462,17 @@ func (e *VectorSearchEngine) ConfigReceiver(config []byte) error {
 	}
 
 	return nil
+}
+
+// isAuthError reports whether err is a Weaviate client error carrying a 401 or
+// 403 status code, i.e. an authentication/authorization failure.
+func isAuthError(err error) bool {
+	var clientErr *fault.WeaviateClientError
+	if errors.As(err, &clientErr) {
+		return clientErr.StatusCode == http.StatusUnauthorized ||
+			clientErr.StatusCode == http.StatusForbidden
+	}
+	return false
 }
 
 // ensureClass creates the Weaviate class if it doesn't exist.
