@@ -275,7 +275,7 @@ func (e *VectorSearchEngine) ConfigFields() []plugin.ConfigField {
 
 // ConfigReceiver applies configuration from the admin UI.
 func (e *VectorSearchEngine) ConfigReceiver(config []byte) error {
-	log.Debugf("pgvector: ConfigReceiver called, raw config=%s", string(config))
+	log.Debugf("pgvector: ConfigReceiver called, config size=%d bytes", len(config))
 
 	// Pre-process: convert string numbers to actual numbers before unmarshalling,
 	// because the admin UI sends all form values as strings.
@@ -297,8 +297,8 @@ func (e *VectorSearchEngine) ConfigReceiver(config []byte) error {
 
 	e.Config = conf
 
-	log.Debugf("pgvector: config parsed: dsn=%s model=%s level=%s threshold=%.2f",
-		conf.DSN, conf.EmbeddingModel, conf.EmbeddingLevel, conf.SimilarityThreshold)
+	log.Debugf("pgvector: config parsed: dsn_set=%t model=%s level=%s threshold=%.2f",
+		conf.DSN != "", conf.EmbeddingModel, conf.EmbeddingLevel, conf.SimilarityThreshold)
 
 	if !plugin.StatusManager.IsEnabled("pgvector_search") {
 		log.Debugf("pgvector: plugin not active, skipping initialization")
