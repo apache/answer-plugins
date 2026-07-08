@@ -31,19 +31,21 @@ func (e *VectorSearchEngine) sync() {
 		log.Warn("qdrant: syncer not registered, skip sync")
 		return
 	}
+	e.lock.Lock()
 	if e.syncing {
+		e.lock.Unlock()
 		log.Warn("qdrant: sync already running, skip")
 		return
 	}
+	e.syncing = true
+	e.lock.Unlock()
 
 	go func() {
-		e.lock.Lock()
-		defer e.lock.Unlock()
-		if e.syncing {
-			return
-		}
-		e.syncing = true
-		defer func() { e.syncing = false }()
+		defer func() {
+			e.lock.Lock()
+			e.syncing = false
+			e.lock.Unlock()
+		}()
 
 		page, pageSize := 1, 100
 
