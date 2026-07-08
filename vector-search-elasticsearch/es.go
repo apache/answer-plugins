@@ -24,6 +24,7 @@ import (
 	"embed"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"strconv"
 	"strings"
 	"sync"
@@ -395,12 +396,13 @@ func (e *VectorSearchEngine) ensureIndex(ctx context.Context) error {
 	if exists {
 		// If the existing index's embedding dimensions differ from the
 		// configured ones (e.g. the embedding model changed), delete it so it
-		// can be recreated with the new dimensions.
+		// can be recreated with the new dimensions. This is a best-effort
+		// check: if the mapping can't be read, keep the existing index rather
+		// than failing the whole configuration update.
 		existingDims, err := e.indexEmbeddingDims(ctx)
 		if err != nil {
-			return fmt.Errorf("get index mapping: %w", err)
-		}
-		if existingDims > 0 && existingDims != dims {
+			log.Warnf("es-vector: could not read index dimensions, keeping existing index: %v", err)
+		} else if existingDims > 0 && existingDims != dims {
 			log.Warnf("es-vector: dimensions changed from %d to %d, recreating index", existingDims, dims)
 			if _, err := e.client.DeleteIndex(indexName).Do(ctx); err != nil {
 				return fmt.Errorf("delete index for dimension change: %w", err)
@@ -437,11 +439,25 @@ func (e *VectorSearchEngine) ensureIndex(ctx context.Context) error {
 
 // indexEmbeddingDims returns the configured `dims` of the embedding field in the
 // existing index mapping, or 0 if it cannot be determined.
+//
+// It uses the untyped `GET /{index}/_mapping` endpoint directly rather than the
+// client's GetMapping helper, because that helper targets the typed
+// `/_mapping/{type}` endpoint which was removed in Elasticsearch 8 and returns
+// HTTP 400 there.
 func (e *VectorSearchEngine) indexEmbeddingDims(ctx context.Context) (int, error) {
-	m, err := e.client.GetMapping().Index(indexName).Do(ctx)
+	res, err := e.client.PerformRequest(ctx, elastic.PerformRequestOptions{
+		Method: http.MethodGet,
+		Path:   "/" + indexName + "/_mapping",
+	})
 	if err != nil {
 		return 0, err
 	}
+
+	var m map[string]interface{}
+	if err := json.Unmarshal(res.Body, &m); err != nil {
+		return 0, err
+	}
+
 	// Response shape:
 	// { "<index>": { "mappings": { "properties": { "embedding": { "dims": N } } } } }
 	idx, ok := m[indexName].(map[string]interface{})
