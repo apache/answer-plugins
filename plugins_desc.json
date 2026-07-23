@@ -151,9 +151,39 @@
       "link": "https://github.com/apache/answer-plugins/tree/main/user-center-wecom"
     },
     {
+      "name": "ChromaDB Vector Search",
+      "desc": "Use ChromaDB for semantic/vector search",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-chromadb"
+    },
+    {
+      "name": "Elasticsearch Vector Search",
+      "desc": "Use Elasticsearch with dense_vector fields for semantic/vector search",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-elasticsearch"
+    },
+    {
       "name": "In-Memory Vector Search",
       "desc": "Lightweight in-memory vector search for development and testing (no external dependencies)",
       "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-memory"
+    },
+    {
+      "name": "Milvus Vector Search",
+      "desc": "Use Milvus for semantic/vector search",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-milvus"
+    },
+    {
+      "name": "PostgreSQL pgvector Search",
+      "desc": "Use PostgreSQL with pgvector extension for semantic/vector search",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-pgvector"
+    },
+    {
+      "name": "Qdrant Vector Search",
+      "desc": "Use Qdrant for semantic/vector search",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-qdrant"
+    },
+    {
+      "name": "Weaviate Vector Search",
+      "desc": "Use Weaviate for semantic/vector search with built-in vector indexing",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-weaviate"
     }
   ],
   "zh_CN": [
@@ -308,9 +338,39 @@
       "link": "https://github.com/apache/answer-plugins/tree/main/user-center-wecom"
     },
     {
+      "name": "ChromaDB 向量搜索",
+      "desc": "使用 ChromaDB 进行语义/向量搜索",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-chromadb"
+    },
+    {
+      "name": "Elasticsearch 向量搜索",
+      "desc": "使用 Elasticsearch dense_vector 字段进行语义/向量搜索",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-elasticsearch"
+    },
+    {
       "name": "内存向量搜索",
       "desc": "轻量级内存向量搜索，适用于开发和测试（无外部依赖）",
       "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-memory"
+    },
+    {
+      "name": "Milvus 向量搜索",
+      "desc": "使用 Milvus 进行语义/向量搜索",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-milvus"
+    },
+    {
+      "name": "PostgreSQL pgvector 搜索",
+      "desc": "使用 PostgreSQL pgvector 扩展进行语义/向量搜索",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-pgvector"
+    },
+    {
+      "name": "Qdrant 向量搜索",
+      "desc": "使用 Qdrant 进行语义/向量搜索",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-qdrant"
+    },
+    {
+      "name": "Weaviate 向量搜索",
+      "desc": "使用 Weaviate 进行语义/向量搜索，支持内置向量索引",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-weaviate"
     }
   ]
 }
