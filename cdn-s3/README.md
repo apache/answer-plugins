@@ -22,7 +22,7 @@
 
 #### CORS
 
-A `type="module"` script is always fetched in CORS mode. If `Visit Url Prefix` points at a different origin than the site itself, the bucket must return `Access-Control-Allow-Origin` for that origin, or the browser blocks the script and the page loads with no JavaScript.
+A `type="module"` script is always fetched in CORS mode. If `Visit Url Prefix` points at a different origin than the site itself, the bucket must return `Access-Control-Allow-Origin` for that origin, or the browser blocks the script and the page loads with no JavaScript. The request for the script itself still returns 200 and server-rendered content still appears, so the page can look populated while nothing is interactive.
 
 Add a CORS configuration to the bucket (S3 console, Permissions tab, or the `PutBucketCors` API). A minimal rule that lets the site read static assets, no credentials required:
 
