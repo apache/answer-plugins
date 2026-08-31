@@ -39,3 +39,13 @@ plugin:
             other: Password
           description:
             other: Redis password
+        tls_enabled:
+          title:
+            other: TLS
+          description:
+            other: Enable TLS when connecting to Redis
+        tls_skip_verify:
+          title:
+            other: Skip TLS Verify
+          description:
+            other: Skip TLS certificate verification (insecure, not recommended for production)

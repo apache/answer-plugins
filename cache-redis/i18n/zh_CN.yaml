@@ -39,3 +39,13 @@ plugin:
             other: 密码
           description:
             other: Redis 密码
+        tls_enabled:
+          title:
+            other: TLS
+          description:
+            other: 连接 Redis 时启用 TLS
+        tls_skip_verify:
+          title:
+            other: 跳过 TLS 验证
+          description:
+            other: 跳过 TLS 证书验证（不安全，不建议在生产环境使用）
