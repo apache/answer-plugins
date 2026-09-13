@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"os"
 	"strings"
 
@@ -232,7 +233,7 @@ func extractUserInfo(entry *ldap.Entry) (plugin.ExternalLoginUserInfo, error) {
 	//email is used to login, therefore required
 	email := entry.GetAttributeValue(LdapAttributeMail)
 	if email == "" {
-		return nil, fmt.Errorf("email is required")
+		return plugin.ExternalLoginUserInfo{}, fmt.Errorf("email is required")
 	}
 
 	return plugin.ExternalLoginUserInfo{
@@ -279,8 +280,14 @@ func createBoolInput(name, title, desc string, value bool, require bool) plugin.
 
 func dialWithTLS(server string, certPath string) (*ldap.Conn, error) {
 
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, fmt.Errorf("invalid LDAP server URL: %w", err)
+	}
+
 	tlsConfig := &tls.Config{
 		InsecureSkipVerify: false,
+		ServerName:         serverURL.Hostname(),
 	}
 
 	if certPath != "" {
