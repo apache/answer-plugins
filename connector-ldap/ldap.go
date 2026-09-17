@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"embed"
+	"encoding/binary"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -32,6 +33,9 @@ const (
 	LdapAttributeMail           = "mail"
 	LdapAttributeDisplayName    = "displayName"
 	LdapAttributeSamAccountName = "sAMAccountName"
+	LdapAttributeObjectGUID     = "objectGUID"
+
+	DefaultExternalIDAttr = "entryUUID"
 )
 
 type Connector struct {
@@ -39,16 +43,18 @@ type Connector struct {
 }
 
 type ConnectorConfig struct {
-	Name          string `json:"name"`
-	Server        string `json:"server"`
-	BaseDN        string `json:"base_dn"`
-	BindDN        string `json:"bind_dn"`
-	BindPassword  string `json:"bind_password"`
-	UserAttr      string `json:"user_attr"`
-	TLSCACertPath string `json:"tls_ca_cert_path"`
+	Name           string `json:"name"`
+	Server         string `json:"server"`
+	BaseDN         string `json:"base_dn"`
+	BindDN         string `json:"bind_dn"`
+	BindPassword   string `json:"bind_password"`
+	UserAttr       string `json:"user_attr"`
+	ExternalIDAttr string `json:"external_id_attr"`
+	TLSCACertPath  string `json:"tls_ca_cert_path"`
 }
 
 var _ plugin.Connector = &Connector{}
+var _ plugin.ConnectorStateRequired = &Connector{}
 
 var loginHTMLContent string
 
@@ -97,7 +103,16 @@ func (g *Connector) ConnectorLogoSVG() string {
 	return ""
 }
 
+func (g *Connector) ConnectorRequireState() bool {
+	return true
+}
+
 func (g *Connector) ConnectorSender(ctx *plugin.GinContext, receiverURL string) string {
+
+	state := ctx.Request.URL.Query().Get("state")
+	if state != "" {
+		receiverURL = receiverURL + "?state=" + url.QueryEscape(state)
+	}
 
 	htmlContent := strings.Replace(loginHTMLContent, "RECEIVER_URL_PLACEHOLDER", receiverURL, -1)
 	ctx.Writer.WriteHeader(200)
@@ -126,6 +141,7 @@ func (g *Connector) ConfigFields() []plugin.ConfigField {
 		createTextInput("bind_dn", "Bind DN", "DN of LDAP bind user", g.Config.BindDN, true, false),
 		createTextInput("bind_password", "Bind Password", "Password for bind DN", g.Config.BindPassword, true, true),
 		createTextInput("user_attr", "User Attribute", "LDAP attribute for username (e.g., uid or sAMAccountName)", g.Config.UserAttr, true, false),
+		createTextInput("external_id_attr", "External ID Attribute", "Stable LDAP attribute used to identify the user across logins, e.g. entryUUID (OpenLDAP) or objectGUID (Active Directory). Do not use a mutable attribute like uid.", externalIDAttrOrDefault(g.Config.ExternalIDAttr), true, false),
 		createTextInput("tls_ca_cert_path", "TLS CA Certificate Path", "Path to custom CA certificate file (optional)", g.Config.TLSCACertPath, false, false),
 	}
 }
@@ -146,7 +162,7 @@ func (c *Connector) ConnectorReceiver(ctx *plugin.GinContext, receiverURL string
 		return userInfo, err
 	}
 
-	l, err := dialWithTLS(c.Config.Server, c.Config.TLSCACertPath)
+	l, err := connectLDAP(c.Config.Server, c.Config.TLSCACertPath)
 	if err != nil {
 		return userInfo, fmt.Errorf("failed to connect to LDAP server: %w", err)
 	}
@@ -156,7 +172,9 @@ func (c *Connector) ConnectorReceiver(ctx *plugin.GinContext, receiverURL string
 		return userInfo, fmt.Errorf("service account bind failed: %w", err)
 	}
 
-	entry, err := searchUser(l, c.Config.BaseDN, c.Config.UserAttr, username)
+	externalIDAttr := externalIDAttrOrDefault(c.Config.ExternalIDAttr)
+
+	entry, err := searchUser(l, c.Config.BaseDN, c.Config.UserAttr, externalIDAttr, username)
 	if err != nil {
 		return userInfo, err
 	}
@@ -166,7 +184,7 @@ func (c *Connector) ConnectorReceiver(ctx *plugin.GinContext, receiverURL string
 		return userInfo, fmt.Errorf("invalid username or password")
 	}
 
-	userInfo, err = extractUserInfo(entry)
+	userInfo, err = extractUserInfo(entry, externalIDAttr)
 	if err != nil {
 		return userInfo, err
 	}
@@ -174,16 +192,19 @@ func (c *Connector) ConnectorReceiver(ctx *plugin.GinContext, receiverURL string
 	return userInfo, nil
 }
 
-func bindServiceAccount(l *ldap.Conn, bindDN, bindPassword string) error {
+var connectLDAP = dialWithTLS
+
+func bindServiceAccount(l ldap.Client, bindDN, bindPassword string) error {
 	return l.Bind(bindDN, bindPassword)
 }
 
-func searchUser(l *ldap.Conn, baseDN, userAttr, username string) (*ldap.Entry, error) {
+func searchUser(l ldap.Client, baseDN, userAttr, externalIDAttr, username string) (*ldap.Entry, error) {
+	attributes := []string{LdapAttributeDn, LdapAttributeUid, LdapAttributeCn, LdapAttributeMail, LdapAttributeDisplayName, LdapAttributeSamAccountName, externalIDAttr}
 	searchRequest := ldap.NewSearchRequest(
 		baseDN,
 		ldap.ScopeWholeSubtree, ldap.NeverDerefAliases, 1, 0, false,
 		fmt.Sprintf("(%s=%s)", userAttr, ldap.EscapeFilter(username)),
-		[]string{LdapAttributeDn, LdapAttributeUid, LdapAttributeCn, LdapAttributeMail, LdapAttributeDisplayName, LdapAttributeSamAccountName},
+		attributes,
 		nil,
 	)
 
@@ -212,7 +233,7 @@ func extractCredentials(request *http.Request) (username string, password string
 	return
 }
 
-func extractUserInfo(entry *ldap.Entry) (plugin.ExternalLoginUserInfo, error) {
+func extractUserInfo(entry *ldap.Entry, externalIDAttr string) (plugin.ExternalLoginUserInfo, error) {
 
 	displayName := entry.GetAttributeValue(LdapAttributeDisplayName)
 
@@ -225,12 +246,11 @@ func extractUserInfo(entry *ldap.Entry) (plugin.ExternalLoginUserInfo, error) {
 		username = entry.GetAttributeValue(LdapAttributeSamAccountName)
 	}
 
-	externalID := username
-	if externalID == "" {
-		externalID = entry.DN // fallback
+	externalID, err := extractExternalID(entry, externalIDAttr)
+	if err != nil {
+		return plugin.ExternalLoginUserInfo{}, err
 	}
 
-	//email is used to login, therefore required
 	email := entry.GetAttributeValue(LdapAttributeMail)
 	if email == "" {
 		return plugin.ExternalLoginUserInfo{}, fmt.Errorf("email is required")
@@ -242,6 +262,39 @@ func extractUserInfo(entry *ldap.Entry) (plugin.ExternalLoginUserInfo, error) {
 		Username:    username,
 		Email:       email,
 	}, nil
+}
+
+func externalIDAttrOrDefault(externalIDAttr string) string {
+	if externalIDAttr == "" {
+		return DefaultExternalIDAttr
+	}
+	return externalIDAttr
+}
+
+func extractExternalID(entry *ldap.Entry, externalIDAttr string) (string, error) {
+	if externalIDAttr == LdapAttributeObjectGUID {
+		raw := entry.GetRawAttributeValue(externalIDAttr)
+		if len(raw) != 16 {
+			return "", fmt.Errorf("missing or invalid %s attribute", externalIDAttr)
+		}
+		return formatObjectGUID(raw), nil
+	}
+
+	externalID := entry.GetAttributeValue(externalIDAttr)
+	if externalID == "" {
+		return "", fmt.Errorf("missing %s attribute", externalIDAttr)
+	}
+	return externalID, nil
+}
+
+func formatObjectGUID(guid []byte) string {
+	return fmt.Sprintf("%08x-%04x-%04x-%x-%x",
+		binary.LittleEndian.Uint32(guid[0:4]),
+		binary.LittleEndian.Uint16(guid[4:6]),
+		binary.LittleEndian.Uint16(guid[6:8]),
+		guid[8:10],
+		guid[10:16],
+	)
 }
 
 func createTextInput(name, title, desc, value string, require bool, password bool) plugin.ConfigField {
@@ -278,7 +331,7 @@ func createBoolInput(name, title, desc string, value bool, require bool) plugin.
 
 }
 
-func dialWithTLS(server string, certPath string) (*ldap.Conn, error) {
+func dialWithTLS(server string, certPath string) (ldap.Client, error) {
 
 	serverURL, err := url.Parse(server)
 	if err != nil {
