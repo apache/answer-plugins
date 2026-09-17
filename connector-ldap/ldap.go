@@ -157,6 +157,10 @@ func (g *Connector) ConfigReceiver(config []byte) error {
 
 func (c *Connector) ConnectorReceiver(ctx *plugin.GinContext, receiverURL string) (userInfo plugin.ExternalLoginUserInfo, err error) {
 
+	if err := checkSameOrigin(ctx.Request, receiverURL); err != nil {
+		return userInfo, fmt.Errorf("csrf check failed: %w", err)
+	}
+
 	username, password, err := extractCredentials(ctx.Request)
 	if err != nil {
 		return userInfo, err
@@ -214,6 +218,31 @@ func searchUser(l ldap.Client, baseDN, userAttr, externalIDAttr, username string
 	}
 
 	return sr.Entries[0], nil
+}
+
+func checkSameOrigin(request *http.Request, receiverURL string) error {
+	expected, err := url.Parse(receiverURL)
+	if err != nil {
+		return fmt.Errorf("invalid receiver URL: %w", err)
+	}
+
+	if origin := request.Header.Get("Origin"); origin != "" {
+		originURL, err := url.Parse(origin)
+		if err != nil || originURL.Scheme != expected.Scheme || originURL.Host != expected.Host {
+			return fmt.Errorf("request origin %q does not match site origin", origin)
+		}
+		return nil
+	}
+
+	if referer := request.Header.Get("Referer"); referer != "" {
+		refererURL, err := url.Parse(referer)
+		if err != nil || refererURL.Scheme != expected.Scheme || refererURL.Host != expected.Host {
+			return fmt.Errorf("request referer %q does not match site origin", referer)
+		}
+		return nil
+	}
+
+	return fmt.Errorf("missing Origin and Referer headers")
 }
 
 func extractCredentials(request *http.Request) (username string, password string, err error) {

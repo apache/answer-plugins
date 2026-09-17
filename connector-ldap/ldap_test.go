@@ -49,6 +49,8 @@ const (
 	testBaseDN       = "dc=example,dc=com"
 	testBindDN       = "cn=admin,dc=example,dc=com"
 	testBindPassword = "admin-password"
+	testReceiverURL  = "http://localhost:8080/answer/api/v1/connector/redirect/ldap"
+	testOrigin       = "http://localhost:8080"
 )
 
 func (m *mockLDAPClient) Start()                     {}
@@ -135,6 +137,7 @@ func loginRequest(username, password string) *gin.Context {
 	form := url.Values{"username": {username}, "password": {password}}
 	req := httptest.NewRequest("POST", "/answer/api/v1/connector/redirect/ldap", strings.NewReader(form.Encode()))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Set("Origin", testOrigin)
 	ctx, _ := gin.CreateTestContext(httptest.NewRecorder())
 	ctx.Request = req
 	return ctx
@@ -184,7 +187,7 @@ func TestConnector_SuccessfulLogin(t *testing.T) {
 		ExternalIDAttr: DefaultExternalIDAttr,
 	}}
 
-	userInfo, err := c.ConnectorReceiver(loginRequest(testUsername, testPassword), "")
+	userInfo, err := c.ConnectorReceiver(loginRequest(testUsername, testPassword), testReceiverURL)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -216,7 +219,7 @@ func TestConnector_ServiceAccountBindFailure(t *testing.T) {
 		ExternalIDAttr: DefaultExternalIDAttr,
 	}}
 
-	_, err := c.ConnectorReceiver(loginRequest(testUsername, "correctPassword"), "")
+	_, err := c.ConnectorReceiver(loginRequest(testUsername, "correctPassword"), testReceiverURL)
 	if err == nil {
 		t.Fatal("expected service account bind failure to produce an error")
 	}
@@ -239,7 +242,7 @@ func TestConnector_UserNotFound(t *testing.T) {
 		ExternalIDAttr: DefaultExternalIDAttr,
 	}}
 
-	_, err := c.ConnectorReceiver(loginRequest("foo", "bar"), "")
+	_, err := c.ConnectorReceiver(loginRequest("foo", "bar"), testReceiverURL)
 	if err == nil {
 		t.Fatal("expected an error when the user search returns no entries")
 	}
@@ -268,9 +271,41 @@ func TestConnector_WrongPassword(t *testing.T) {
 		ExternalIDAttr: DefaultExternalIDAttr,
 	}}
 
-	_, err := c.ConnectorReceiver(loginRequest(testUsername, "iAmAWrongPassword"), "")
+	_, err := c.ConnectorReceiver(loginRequest(testUsername, "iAmAWrongPassword"), testReceiverURL)
 	if err == nil {
 		t.Fatal("expected wrong password to produce an error")
+	}
+}
+
+func TestCheckSameOrigin_MatchingOrigin(t *testing.T) {
+	req := loginRequest(testUsername, testPassword).Request
+	if err := checkSameOrigin(req, testReceiverURL); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckSameOrigin_MatchingReferer(t *testing.T) {
+	req := loginRequest(testUsername, testPassword).Request
+	req.Header.Del("Origin")
+	req.Header.Set("Referer", testReceiverURL+"?state=foo")
+	if err := checkSameOrigin(req, testReceiverURL); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCheckSameOrigin_MismatchedOrigin(t *testing.T) {
+	req := loginRequest(testUsername, testPassword).Request
+	req.Header.Set("Origin", "https://definitely.not.evil.com")
+	if err := checkSameOrigin(req, testReceiverURL); err == nil {
+		t.Fatal("expected a mismatched Origin header to be rejected")
+	}
+}
+
+func TestCheckSameOrigin_MissingHeaders(t *testing.T) {
+	req := loginRequest(testUsername, testPassword).Request
+	req.Header.Del("Origin")
+	if err := checkSameOrigin(req, testReceiverURL); err == nil {
+		t.Fatal("expected a request with no Origin or Referer header to be rejected")
 	}
 }
 
