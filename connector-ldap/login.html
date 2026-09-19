@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>LOGIN_TITLE_PLACEHOLDER</title>
     <link id="favicon" rel="icon" href="/favicon.ico">
     <style>
         :root {
@@ -93,18 +93,20 @@
     <div class="card">
         <div class="brand">
             <img id="brand-logo" src="" alt="" hidden>
-            <h1 id="brand-name">Login</h1>
-            <p>Sign in with your LDAP account</p>
+            <h1 id="brand-name">LOGIN_TITLE_PLACEHOLDER</h1>
+            <p>LOGIN_SUBTITLE_PLACEHOLDER</p>
         </div>
         <form method="post" action="RECEIVER_URL_PLACEHOLDER">
-            <label for="username">Username</label>
+            <label for="username">LOGIN_USERNAME_PLACEHOLDER</label>
             <input id="username" name="username" type="text" autocomplete="username" required autofocus>
-            <label for="password">Password</label>
+            <label for="password">LOGIN_PASSWORD_PLACEHOLDER</label>
             <input id="password" name="password" type="password" autocomplete="current-password" required>
-            <button type="submit">Login</button>
+            <button type="submit">LOGIN_SUBMIT_PLACEHOLDER</button>
         </form>
     </div>
     <script>
+        var defaultTitle = document.title;
+
         fetch("/answer/api/v1/siteinfo")
             .then(function (res) { return res.json(); })
             .then(function (res) {
@@ -114,7 +116,7 @@
                 var theme = (data.theme && data.theme.theme_config && data.theme.theme_config.default) || {};
 
                 if (general.name) {
-                    document.title = general.name + " - Login";
+                    document.title = general.name + " - " + defaultTitle;
                     document.getElementById("brand-name").textContent = general.name;
                 }
                 if (branding.favicon) {

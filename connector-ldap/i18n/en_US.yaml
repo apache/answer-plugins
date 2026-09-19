@@ -25,4 +25,55 @@ plugin:
           other: LDAP Connector
         description:
           other: Connect to LDAP for third-party login
-          
+      config:
+        name:
+          title:
+            other: LDAP
+          description:
+            other: LDAP connector name
+        server:
+          title:
+            other: LDAP Server
+          description:
+            other: e.g. ldaps://ldap.example.com:636
+        base_dn:
+          title:
+            other: Base DN
+          description:
+            other: e.g. dc=example,dc=com
+        bind_dn:
+          title:
+            other: Bind DN
+          description:
+            other: DN of LDAP bind user
+        bind_password:
+          title:
+            other: Bind Password
+          description:
+            other: Password for bind DN
+        user_attr:
+          title:
+            other: User Attribute
+          description:
+            other: LDAP attribute for username (e.g., uid or sAMAccountName)
+        external_id_attr:
+          title:
+            other: External ID Attribute
+          description:
+            other: Stable LDAP attribute used to identify the user across logins, e.g. entryUUID (OpenLDAP) or objectGUID (Active Directory). Do not use a mutable attribute like uid.
+        tls_ca_cert_path:
+          title:
+            other: TLS CA Certificate Path
+          description:
+            other: Path to custom CA certificate file (optional)
+      login:
+        title:
+          other: Login
+        subtitle:
+          other: Sign in with your LDAP account
+        username:
+          other: Username
+        password:
+          other: Password
+        submit:
+          other: Login

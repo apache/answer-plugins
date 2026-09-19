@@ -115,6 +115,11 @@ func (g *Connector) ConnectorSender(ctx *plugin.GinContext, receiverURL string) 
 	}
 
 	htmlContent := strings.Replace(loginHTMLContent, "RECEIVER_URL_PLACEHOLDER", receiverURL, -1)
+	htmlContent = strings.Replace(htmlContent, "LOGIN_TITLE_PLACEHOLDER", plugin.Translate(ctx, i18n.LoginTitle), -1)
+	htmlContent = strings.Replace(htmlContent, "LOGIN_SUBTITLE_PLACEHOLDER", plugin.Translate(ctx, i18n.LoginSubtitle), -1)
+	htmlContent = strings.Replace(htmlContent, "LOGIN_USERNAME_PLACEHOLDER", plugin.Translate(ctx, i18n.LoginUsername), -1)
+	htmlContent = strings.Replace(htmlContent, "LOGIN_PASSWORD_PLACEHOLDER", plugin.Translate(ctx, i18n.LoginPassword), -1)
+	htmlContent = strings.Replace(htmlContent, "LOGIN_SUBMIT_PLACEHOLDER", plugin.Translate(ctx, i18n.LoginSubmit), -1)
 	ctx.Writer.WriteHeader(200)
 	ctx.Writer.Header().Set("Content-Type", "text/html")
 	err := writeHtmlContent(ctx, htmlContent)
@@ -132,17 +137,16 @@ func writeHtmlContent(ctx *plugin.GinContext, htmlContent string) error {
 	return err
 }
 
-// TODO get from translator
 func (g *Connector) ConfigFields() []plugin.ConfigField {
 	return []plugin.ConfigField{
-		createTextInput("name", "LDAP", "LDAP connector name", g.Config.Name, true, false),
-		createTextInput("server", "LDAP Server", "e.g. ldaps://ldap.example.com:636", g.Config.Server, true, false),
-		createTextInput("base_dn", "Base DN", "e.g. dc=example,dc=com", g.Config.BaseDN, true, false),
-		createTextInput("bind_dn", "Bind DN", "DN of LDAP bind user", g.Config.BindDN, true, false),
-		createTextInput("bind_password", "Bind Password", "Password for bind DN", g.Config.BindPassword, true, true),
-		createTextInput("user_attr", "User Attribute", "LDAP attribute for username (e.g., uid or sAMAccountName)", g.Config.UserAttr, true, false),
-		createTextInput("external_id_attr", "External ID Attribute", "Stable LDAP attribute used to identify the user across logins, e.g. entryUUID (OpenLDAP) or objectGUID (Active Directory). Do not use a mutable attribute like uid.", externalIDAttrOrDefault(g.Config.ExternalIDAttr), true, false),
-		createTextInput("tls_ca_cert_path", "TLS CA Certificate Path", "Path to custom CA certificate file (optional)", g.Config.TLSCACertPath, false, false),
+		createTextInput("name", i18n.ConfigNameTitle, i18n.ConfigNameDescription, g.Config.Name, true, false),
+		createTextInput("server", i18n.ConfigServerTitle, i18n.ConfigServerDescription, g.Config.Server, true, false),
+		createTextInput("base_dn", i18n.ConfigBaseDNTitle, i18n.ConfigBaseDNDescription, g.Config.BaseDN, true, false),
+		createTextInput("bind_dn", i18n.ConfigBindDNTitle, i18n.ConfigBindDNDescription, g.Config.BindDN, true, false),
+		createTextInput("bind_password", i18n.ConfigBindPasswordTitle, i18n.ConfigBindPasswordDescription, g.Config.BindPassword, true, true),
+		createTextInput("user_attr", i18n.ConfigUserAttrTitle, i18n.ConfigUserAttrDescription, g.Config.UserAttr, true, false),
+		createTextInput("external_id_attr", i18n.ConfigExternalIDAttrTitle, i18n.ConfigExternalIDAttrDescription, externalIDAttrOrDefault(g.Config.ExternalIDAttr), true, false),
+		createTextInput("tls_ca_cert_path", i18n.ConfigTLSCACertPathTitle, i18n.ConfigTLSCACertPathDescription, g.Config.TLSCACertPath, false, false),
 	}
 }
 
