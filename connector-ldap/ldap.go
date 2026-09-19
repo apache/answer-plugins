@@ -12,7 +12,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/DanielAuerX/answer-plugins/connector-ldap/i18n"
+	"github.com/apache/answer-plugins/connector-ldap/i18n"
 	"github.com/segmentfault/pacman/log"
 
 	"github.com/apache/answer-plugins/util"
