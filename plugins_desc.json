@@ -1,161 +1,4 @@
 {
-  "en_US": [
-    {
-      "name": "Redis Cache",
-      "desc": "Use Redis as cache",
-      "link": "https://github.com/apache/answer-plugins/tree/main/cache-redis"
-    },
-    {
-      "name": "Basic Captcha",
-      "desc": "Default graphic verification code",
-      "link": "https://github.com/apache/answer-plugins/tree/main/captcha-basic"
-    },
-    {
-      "name": "Google reCAPTCHA v2",
-      "desc": "Google reCAPTCHA v2 plugin",
-      "link": "https://github.com/apache/answer-plugins/tree/main/captcha-google-v2"
-    },
-    {
-      "name": "Aliyun CDN",
-      "desc": "Speed up your website and enjoy greatly improved loading times around the world.",
-      "link": "https://github.com/apache/answer-plugins/tree/main/cdn-aliyun"
-    },
-    {
-      "name": "Amazon CloudFront",
-      "desc": "Speed up your website and enjoy greatly improved loading times around the world.",
-      "link": "https://github.com/apache/answer-plugins/tree/main/cdn-s3"
-    },
-    {
-      "name": "Apache Connector",
-      "desc": "Connect to Apache Oauth",
-      "link": "https://github.com/apache/answer-plugins/tree/main/connector-apache"
-    },
-    {
-      "name": "OAuth2 Basic",
-      "desc": "Generic OAuth2 Plugin",
-      "link": "https://github.com/apache/answer-plugins/tree/main/connector-basic"
-    },
-    {
-      "name": "Dingtalk Connector",
-      "desc": "Connect to Dingtalk for third-party login",
-      "link": "https://github.com/apache/answer-plugins/tree/main/connector-dingtalk"
-    },
-    {
-      "name": "Google Connector",
-      "desc": "Connect to Google for third-party login",
-      "link": "https://github.com/apache/answer-plugins/tree/main/connector-google"
-    },
-    {
-      "name": "Wallet Connector",
-      "desc": "Connect to Wallet for third-party login",
-      "link": "https://github.com/apache/answer-plugins/tree/main/connector-wallet"
-    },
-    {
-      "name": "Chart Editor",
-      "desc": "Render chart in editor",
-      "link": "https://github.com/apache/answer-plugins/tree/main/editor-chart"
-    },
-    {
-      "name": "Formula Editor",
-      "desc": "Render formula in editor",
-      "link": "https://github.com/apache/answer-plugins/tree/main/editor-formula"
-    },
-    {
-      "name": "Stacks Editor",
-      "desc": "Stacks Editor Plugin",
-      "link": "https://github.com/apache/answer-plugins/tree/main/editor-stacks"
-    },
-    {
-      "name": "Embed",
-      "desc": "Embed content from other sites",
-      "link": "https://github.com/apache/answer-plugins/tree/main/embed-basic"
-    },
-    {
-      "name": "Ding talk Notification",
-      "desc": "Send notifications to Ding Talk",
-      "link": "https://github.com/apache/answer-plugins/tree/main/notification-dingtalk"
-    },
-    {
-      "name": "Slack Notification",
-      "desc": "Send notifications to Slack",
-      "link": "https://github.com/apache/answer-plugins/tree/main/notification-slack"
-    },
-    {
-      "name": "Wecom Notification",
-      "desc": "Send notifications to Wecom",
-      "link": "https://github.com/apache/answer-plugins/tree/main/notification-wecom"
-    },
-    {
-      "name": "Quicklinks",
-      "desc": "Customize the sidebar tags or links",
-      "link": "https://github.com/apache/answer-plugins/tree/main/quick-links"
-    },
-    {
-      "name": "Code Highlight",
-      "desc": "Highlight code blocks in Markdown content",
-      "link": "https://github.com/apache/answer-plugins/tree/main/render-markdown-codehighlight"
-    },
-    {
-      "name": "Akismet Anti-Spam",
-      "desc": "Akismet Anti-Spam is used to check the content of posts and comments against the Akismet web service to see if they look like spam.",
-      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-akismet"
-    },
-    {
-      "name": "Baidu Anti-Spam",
-      "desc": "Baidu Anti-Spam is used to check the content of posts and comments against the Baidu web service to see if they look like spam.",
-      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-baidu"
-    },
-    {
-      "name": "Review Basic",
-      "desc": "Generic review rule plugin",
-      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-basic"
-    },
-    {
-      "name": "Algolia Search",
-      "desc": "Use Algolia as a search engine.",
-      "link": "https://github.com/apache/answer-plugins/tree/main/search-algolia"
-    },
-    {
-      "name": "Elasticsearch Engine",
-      "desc": "Use Elasticsearch as search engine",
-      "link": "https://github.com/apache/answer-plugins/tree/main/search-elasticsearch"
-    },
-    {
-      "name": "MeiliSearch",
-      "desc": "MeiliSearch is a powerful, fast, open-source, easy to use and deploy search engine.",
-      "link": "https://github.com/apache/answer-plugins/tree/main/search-meilisearch"
-    },
-    {
-      "name": "Aliyun OSS storage",
-      "desc": "Upload files to AliCloud OSS storage",
-      "link": "https://github.com/apache/answer-plugins/tree/main/storage-aliyunoss"
-    },
-    {
-      "name": "S3 storage",
-      "desc": "Upload files to S3 storage",
-      "link": "https://github.com/apache/answer-plugins/tree/main/storage-s3"
-    },
-    {
-      "name": "Tencent COS storage",
-      "desc": "Upload files to Tencent COS storage",
-      "link": "https://github.com/apache/answer-plugins/tree/main/storage-tencentyuncos"
-    },
-    {
-      "name": "Slack User Center",
-      "desc": "A plugin for integrating Slack user management",
-      "link": "https://github.com/apache/answer-plugins/tree/main/user-center-slack"
-    },
-    {
-      "name": "WeCom",
-      "desc": "Get user info from WeCom and sync to User Center",
-      "link": "https://github.com/apache/answer-plugins/tree/main/user-center-wecom"
-    },
-    {
-      "name": "In-Memory Vector Search",
-      "desc": "Lightweight in-memory vector search for development and testing (no external dependencies)",
-      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-memory"
-    }
-  ],
   "zh_CN": [
     {
       "name": "Redis缓存",
@@ -308,9 +151,226 @@
       "link": "https://github.com/apache/answer-plugins/tree/main/user-center-wecom"
     },
     {
+      "name": "ChromaDB 向量搜索",
+      "desc": "使用 ChromaDB 进行语义/向量搜索",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-chromadb"
+    },
+    {
+      "name": "Elasticsearch 向量搜索",
+      "desc": "使用 Elasticsearch dense_vector 字段进行语义/向量搜索",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-elasticsearch"
+    },
+    {
       "name": "内存向量搜索",
       "desc": "轻量级内存向量搜索，适用于开发和测试（无外部依赖）",
       "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-memory"
+    },
+    {
+      "name": "Milvus 向量搜索",
+      "desc": "使用 Milvus 进行语义/向量搜索",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-milvus"
+    },
+    {
+      "name": "PostgreSQL pgvector 搜索",
+      "desc": "使用 PostgreSQL pgvector 扩展进行语义/向量搜索",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-pgvector"
+    },
+    {
+      "name": "Qdrant 向量搜索",
+      "desc": "使用 Qdrant 进行语义/向量搜索",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-qdrant"
+    },
+    {
+      "name": "Weaviate 向量搜索",
+      "desc": "使用 Weaviate 进行语义/向量搜索，支持内置向量索引",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-weaviate"
+    }
+  ],
+  "en_US": [
+    {
+      "name": "Redis Cache",
+      "desc": "Use Redis as cache",
+      "link": "https://github.com/apache/answer-plugins/tree/main/cache-redis"
+    },
+    {
+      "name": "Basic Captcha",
+      "desc": "Default graphic verification code",
+      "link": "https://github.com/apache/answer-plugins/tree/main/captcha-basic"
+    },
+    {
+      "name": "Google reCAPTCHA v2",
+      "desc": "Google reCAPTCHA v2 plugin",
+      "link": "https://github.com/apache/answer-plugins/tree/main/captcha-google-v2"
+    },
+    {
+      "name": "Aliyun CDN",
+      "desc": "Speed up your website and enjoy greatly improved loading times around the world.",
+      "link": "https://github.com/apache/answer-plugins/tree/main/cdn-aliyun"
+    },
+    {
+      "name": "Amazon CloudFront",
+      "desc": "Speed up your website and enjoy greatly improved loading times around the world.",
+      "link": "https://github.com/apache/answer-plugins/tree/main/cdn-s3"
+    },
+    {
+      "name": "Apache Connector",
+      "desc": "Connect to Apache Oauth",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-apache"
+    },
+    {
+      "name": "OAuth2 Basic",
+      "desc": "Generic OAuth2 Plugin",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-basic"
+    },
+    {
+      "name": "Dingtalk Connector",
+      "desc": "Connect to Dingtalk for third-party login",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-dingtalk"
+    },
+    {
+      "name": "Google Connector",
+      "desc": "Connect to Google for third-party login",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-google"
+    },
+    {
+      "name": "Wallet Connector",
+      "desc": "Connect to Wallet for third-party login",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-wallet"
+    },
+    {
+      "name": "Chart Editor",
+      "desc": "Render chart in editor",
+      "link": "https://github.com/apache/answer-plugins/tree/main/editor-chart"
+    },
+    {
+      "name": "Formula Editor",
+      "desc": "Render formula in editor",
+      "link": "https://github.com/apache/answer-plugins/tree/main/editor-formula"
+    },
+    {
+      "name": "Stacks Editor",
+      "desc": "Stacks Editor Plugin",
+      "link": "https://github.com/apache/answer-plugins/tree/main/editor-stacks"
+    },
+    {
+      "name": "Embed",
+      "desc": "Embed content from other sites",
+      "link": "https://github.com/apache/answer-plugins/tree/main/embed-basic"
+    },
+    {
+      "name": "Ding talk Notification",
+      "desc": "Send notifications to Ding Talk",
+      "link": "https://github.com/apache/answer-plugins/tree/main/notification-dingtalk"
+    },
+    {
+      "name": "Slack Notification",
+      "desc": "Send notifications to Slack",
+      "link": "https://github.com/apache/answer-plugins/tree/main/notification-slack"
+    },
+    {
+      "name": "Wecom Notification",
+      "desc": "Send notifications to Wecom",
+      "link": "https://github.com/apache/answer-plugins/tree/main/notification-wecom"
+    },
+    {
+      "name": "Quicklinks",
+      "desc": "Customize the sidebar tags or links",
+      "link": "https://github.com/apache/answer-plugins/tree/main/quick-links"
+    },
+    {
+      "name": "Code Highlight",
+      "desc": "Highlight code blocks in Markdown content",
+      "link": "https://github.com/apache/answer-plugins/tree/main/render-markdown-codehighlight"
+    },
+    {
+      "name": "Akismet Anti-Spam",
+      "desc": "Akismet Anti-Spam is used to check the content of posts and comments against the Akismet web service to see if they look like spam.",
+      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-akismet"
+    },
+    {
+      "name": "Baidu Anti-Spam",
+      "desc": "Baidu Anti-Spam is used to check the content of posts and comments against the Baidu web service to see if they look like spam.",
+      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-baidu"
+    },
+    {
+      "name": "Review Basic",
+      "desc": "Generic review rule plugin",
+      "link": "https://github.com/apache/answer-plugins/tree/main/reviewer-basic"
+    },
+    {
+      "name": "Algolia Search",
+      "desc": "Use Algolia as a search engine.",
+      "link": "https://github.com/apache/answer-plugins/tree/main/search-algolia"
+    },
+    {
+      "name": "Elasticsearch Engine",
+      "desc": "Use Elasticsearch as search engine",
+      "link": "https://github.com/apache/answer-plugins/tree/main/search-elasticsearch"
+    },
+    {
+      "name": "MeiliSearch",
+      "desc": "MeiliSearch is a powerful, fast, open-source, easy to use and deploy search engine.",
+      "link": "https://github.com/apache/answer-plugins/tree/main/search-meilisearch"
+    },
+    {
+      "name": "Aliyun OSS storage",
+      "desc": "Upload files to AliCloud OSS storage",
+      "link": "https://github.com/apache/answer-plugins/tree/main/storage-aliyunoss"
+    },
+    {
+      "name": "S3 storage",
+      "desc": "Upload files to S3 storage",
+      "link": "https://github.com/apache/answer-plugins/tree/main/storage-s3"
+    },
+    {
+      "name": "Tencent COS storage",
+      "desc": "Upload files to Tencent COS storage",
+      "link": "https://github.com/apache/answer-plugins/tree/main/storage-tencentyuncos"
+    },
+    {
+      "name": "Slack User Center",
+      "desc": "A plugin for integrating Slack user management",
+      "link": "https://github.com/apache/answer-plugins/tree/main/user-center-slack"
+    },
+    {
+      "name": "WeCom",
+      "desc": "Get user info from WeCom and sync to User Center",
+      "link": "https://github.com/apache/answer-plugins/tree/main/user-center-wecom"
+    },
+    {
+      "name": "ChromaDB Vector Search",
+      "desc": "Use ChromaDB for semantic/vector search",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-chromadb"
+    },
+    {
+      "name": "Elasticsearch Vector Search",
+      "desc": "Use Elasticsearch with dense_vector fields for semantic/vector search",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-elasticsearch"
+    },
+    {
+      "name": "In-Memory Vector Search",
+      "desc": "Lightweight in-memory vector search for development and testing (no external dependencies)",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-memory"
+    },
+    {
+      "name": "Milvus Vector Search",
+      "desc": "Use Milvus for semantic/vector search",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-milvus"
+    },
+    {
+      "name": "PostgreSQL pgvector Search",
+      "desc": "Use PostgreSQL with pgvector extension for semantic/vector search",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-pgvector"
+    },
+    {
+      "name": "Qdrant Vector Search",
+      "desc": "Use Qdrant for semantic/vector search",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-qdrant"
+    },
+    {
+      "name": "Weaviate Vector Search",
+      "desc": "Use Weaviate for semantic/vector search with built-in vector indexing",
+      "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-weaviate"
     }
   ]
 }
