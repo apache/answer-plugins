@@ -21,6 +21,7 @@ package redis
 
 import (
 	"context"
+	"crypto/tls"
 	"embed"
 	_ "embed"
 	"encoding/json"
@@ -45,9 +46,11 @@ type Cache struct {
 }
 
 type CacheConfig struct {
-	Endpoint string `json:"endpoint"`
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Endpoint      string `json:"endpoint"`
+	Username      string `json:"username"`
+	Password      string `json:"password"`
+	TLSEnabled    bool   `json:"tls_enabled"`
+	TLSSkipVerify bool   `json:"tls_skip_verify"`
 }
 
 func init() {
@@ -175,6 +178,24 @@ func (c *Cache) ConfigFields() []plugin.ConfigField {
 			},
 			Value: c.Config.Password,
 		},
+		{
+			Name:  "tls_enabled",
+			Type:  plugin.ConfigTypeSwitch,
+			Title: plugin.MakeTranslator(i18n.ConfigTLSEnabledTitle),
+			Value: c.Config.TLSEnabled,
+			UIOptions: plugin.ConfigFieldUIOptions{
+				Label: plugin.MakeTranslator(i18n.ConfigTLSEnabledDescription),
+			},
+		},
+		{
+			Name:  "tls_skip_verify",
+			Type:  plugin.ConfigTypeSwitch,
+			Title: plugin.MakeTranslator(i18n.ConfigTLSSkipVerifyTitle),
+			Value: c.Config.TLSSkipVerify,
+			UIOptions: plugin.ConfigFieldUIOptions{
+				Label: plugin.MakeTranslator(i18n.ConfigTLSSkipVerifyDescription),
+			},
+		},
 	}
 }
 
@@ -183,10 +204,17 @@ func (c *Cache) ConfigReceiver(config []byte) error {
 	_ = json.Unmarshal(config, conf)
 	c.Config = conf
 
-	c.RedisClient = redis.NewClient(&redis.Options{
+	opts := &redis.Options{
 		Addr:     conf.Endpoint,
 		Username: conf.Username,
 		Password: conf.Password,
-	})
+	}
+	if conf.TLSEnabled {
+		opts.TLSConfig = &tls.Config{
+			InsecureSkipVerify: conf.TLSSkipVerify,
+			MinVersion:         tls.VersionTLS12,
+		}
+	}
+	c.RedisClient = redis.NewClient(opts)
 	return nil
 }

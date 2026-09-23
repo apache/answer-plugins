@@ -10,3 +10,7 @@
 
 ### Configuration
 - `Endpoint` - Redis connection address
+- `Username` - Redis username
+- `Password` - Redis password
+- `TLS` - Enable TLS when connecting to Redis
+- `Skip TLS Verify` - Skip TLS certificate verification (insecure, not recommended for production)

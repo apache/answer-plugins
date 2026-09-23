@@ -29,4 +29,9 @@ const (
 	ConfigUsernameDescription = "plugin.redis_cache.backend.config.username.description"
 	ConfigPasswordTitle       = "plugin.redis_cache.backend.config.password.title"
 	ConfigPasswordDescription = "plugin.redis_cache.backend.config.password.description"
+
+	ConfigTLSEnabledTitle          = "plugin.redis_cache.backend.config.tls_enabled.title"
+	ConfigTLSEnabledDescription    = "plugin.redis_cache.backend.config.tls_enabled.description"
+	ConfigTLSSkipVerifyTitle       = "plugin.redis_cache.backend.config.tls_skip_verify.title"
+	ConfigTLSSkipVerifyDescription = "plugin.redis_cache.backend.config.tls_skip_verify.description"
 )
