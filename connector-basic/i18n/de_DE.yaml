@@ -1,0 +1,103 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+plugin:
+  basic_connector:
+    backend:
+      name:
+        other: basic
+      info:
+        name:
+          other: OAuth2 Basis
+        description:
+          other: Allgemeines OAuth2 Plugin
+      config:
+        name:
+          title:
+            other: Name
+          description:
+            other: Name des Autorisierungsservers, so wie er auf der Login-Seite heißen soll
+        client_id:
+          title:
+            other: ClientID
+          description:
+            other: Client-ID der Anwendung
+        client_secret:
+          title:
+            other: ClientSecret
+          description:
+            other: Client Secret der Anwendung
+        authorize_url:
+          title:
+            other: Autorisierungs-URL
+          description:
+            other: Autorisierungs-URL der Anwendung
+        token_url:
+          title:
+            other: Token-URL
+          description:
+            other: Token-URL der Anwendung
+        user_json_url:
+          title:
+            other: User-JSON-URL
+          description:
+            other: "Diese Webseite liefert Benutzerinformationen (userinfo) im JSON-Format"
+        user_id_json_path:
+          title:
+            other: JSON-Pfad der User-ID
+          description:
+            other: "Pfad im Userinfo-JSON zur User-ID. Beispiel: user.id"
+        user_display_name_json_path:
+          title:
+            other: JSON-Pfad des Anzeigenamen
+          description:
+            other: "Pfad im Userinfo-JSON zum Anzeigenamen. Beispiel: user.name"
+        user_username_json_path:
+          title:
+            other: JSON-Pfad des Anmeldenamen
+          description:
+            other: "Pfad im Userinfo-JSON zum Anmeldenamen des Benutzers. Beispiel: user.login"
+        user_email_json_path:
+          title:
+            other: JSON-Pfad der E-Mail
+          description:
+            other: "Pfad im Userinfo-JSON zur E-Mail-Adresse des Benutzers. Beispiel: user.email"
+        user_avatar_json_path:
+          title:
+            other: JSON-Pfad des Benutzer-Avatars
+          description:
+            other: "Pfad im Userinfo-JSON zum Avatar des Benutzers. Beispiel: user.avatar_url"
+        check_email_verified:
+          title:
+            other: E-Mail ist verifiziert
+          label:
+            other: "Der OAuth2-Anbieter hat die E-Mail-Adresse bereits verifiziert"
+        email_verified_json_path:
+          title:
+            other: JSON-Pfad zur verifizierten E-Mail
+          description:
+            other: "Pfad im Userinfo-JSON zur verifizierten E-Mail-Adresse. Beispiel: user.email_verified"
+        scope:
+          title:
+            other: Scope
+          description:
+            other: "OAuth-Scope der Anwendung. Trennen Sie mehrere Scopes durch `,`. Beispiel: user.email,user.age"
+        logo_svg:
+          title:
+            other: Logo SVG
+          description:
+            other: "Logo der Anwendung als Vektorgrafik (SVG), formatiert als Base64"
