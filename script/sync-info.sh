@@ -55,7 +55,7 @@ for plugin in "${plugins[@]}"; do
     fi
 
     if [ -d "$dir/i18n" ]; then
-        for file in $(find "$dir/i18n" -type f -name "*.yaml"); do
+        for file in $(find "$dir/i18n" -type f -name "*.yaml" | LC_ALL=C sort); do
             if [ -f "$file" ]; then
                 file_name=$(basename "$file")
                 file_name=${file_name%.*}

@@ -18,7 +18,11 @@
 name: Sync info
 on:
   push:
-    branches: [dev, main]
+    branches: [dev]
+
+concurrency:
+  group: sync-info
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -38,3 +42,5 @@ jobs:
           title: "chore: Sync Plugin Info"
           body: "Sync Plugin Info"
           branch: "chore/sync-info"
+          base: dev
+          delete-branch: true
