@@ -37,10 +37,13 @@ echo "{}" >"$project_root/plugins_desc.json"
 
 plugins=()
 for dir in "$project_root"/*/; do
-    if [[ "$dir" =~ (node_modules|util|script|.git|.vscode) ]]; then
-        continue
-    fi
-    plugins+=($(basename "$dir"))
+    plugin=$(basename "$dir")
+    case "$plugin" in
+        node_modules|util|script|.git|.vscode)
+            continue
+            ;;
+    esac
+    plugins+=("$plugin")
 done
 
 plugins=($(printf '%s\n' "${plugins[@]}" | sort))
