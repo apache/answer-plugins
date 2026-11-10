@@ -387,5 +387,12 @@
       "desc": "使用 Weaviate 进行语义/向量搜索，支持内置向量索引",
       "link": "https://github.com/apache/answer-plugins/tree/main/vector-search-weaviate"
     }
+  ],
+  "de_DE": [
+    {
+      "name": "OAuth2 Basis",
+      "desc": "Allgemeines OAuth2 Plugin",
+      "link": "https://github.com/apache/answer-plugins/tree/main/connector-basic"
+    }
   ]
 }
