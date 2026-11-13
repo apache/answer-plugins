@@ -22,6 +22,8 @@ package slack_user_center
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
+	"strings"
 	"sync"
 
 	"github.com/apache/answer-plugins/user-center-slack/i18n"
@@ -70,6 +72,15 @@ func (ucc *UserConfigCache) NewQuestionSubscriberIDs() []string {
 		}
 	}
 	return userIDs
+}
+
+func validateWebhookURL(rawURL string) error {
+	u, err := url.Parse(rawURL)
+	if err != nil || !strings.EqualFold(u.Scheme, "https") || !strings.EqualFold(u.Hostname(), "hooks.slack.com") ||
+		(u.Port() != "" && u.Port() != "443") || u.User != nil || u.Fragment != "" {
+		return fmt.Errorf("invalid webhook url")
+	}
+	return nil
 }
 
 func (uc *UserCenter) UserConfigFields() []plugin.ConfigField {
@@ -159,6 +170,11 @@ func (uc *UserCenter) UserConfigReceiver(userID string, config []byte) error {
 	err := json.Unmarshal(config, &userConfig)
 	if err != nil {
 		return fmt.Errorf("unmarshal user config failed: %w", err)
+	}
+	if len(userConfig.WebhookURL) > 0 {
+		if err := validateWebhookURL(userConfig.WebhookURL); err != nil {
+			return err
+		}
 	}
 	uc.UserConfigCache.SetUserConfig(userID, &userConfig)
 	return nil
