@@ -109,6 +109,10 @@ func (n *Notification) Notify(msg plugin.NotificationMessage) {
 		log.Errorf("user %s has no webhook url", msg.ReceiverUserID)
 		return
 	}
+	if err := validateWebhookURL(userConfig.WebhookURL); err != nil {
+		log.Errorf("user %s has an invalid webhook url", msg.ReceiverUserID)
+		return
+	}
 
 	notificationMsg := renderNotification(msg)
 	// no need to send empty message
@@ -118,7 +122,7 @@ func (n *Notification) Notify(msg plugin.NotificationMessage) {
 	}
 
 	// Create a Resty Client
-	client := resty.New()
+	client := resty.New().SetRedirectPolicy(resty.NoRedirectPolicy())
 	resp, err := client.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(NewWebhookReq(notificationMsg)).
