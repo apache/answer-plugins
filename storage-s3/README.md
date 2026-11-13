@@ -21,6 +21,8 @@
 
 #### DigitalOcean
 
-If using a DigitalOcean Spaces Object Storage, you must set the following environment
-variable: `ACL_PUBLIC_READ=true`. Without this environment variable set, uploads will
-not be publicly readable. See also [#97](https://github.com/apache/answer-plugins/issues/97).
+If using a DigitalOcean Spaces Object Storage, OVHcloud Object Storage, or
+similar providers, you must set the following environment variable:
+`ACL_PUBLIC_READ=true`. Without this environment variable set, uploads will
+not be publicly readable. See also
+[#97](https://github.com/apache/answer-plugins/issues/97).
