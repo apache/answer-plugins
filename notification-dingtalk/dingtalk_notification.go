@@ -63,12 +63,7 @@ func (n *Notification) Info() plugin.Info {
 
 // GetNewQuestionSubscribers returns the subscribers of the new question notification
 func (n *Notification) GetNewQuestionSubscribers() (userIDs []string) {
-	for userID, conf := range n.UserConfigCache.userConfigMapping {
-		if conf.AllNewQuestions {
-			userIDs = append(userIDs, userID)
-		}
-	}
-	return userIDs
+	return n.UserConfigCache.NewQuestionSubscriberIDs()
 }
 
 // Notify sends a notification to the user
