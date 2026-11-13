@@ -31,12 +31,7 @@ import (
 
 // GetNewQuestionSubscribers returns the subscribers of the new question notification
 func (uc *UserCenter) GetNewQuestionSubscribers() (userIDs []string) {
-	for userID, conf := range uc.UserConfigCache.userConfigMapping {
-		if conf.AllNewQuestions {
-			userIDs = append(userIDs, userID)
-		}
-	}
-	return userIDs
+	return uc.UserConfigCache.NewQuestionSubscriberIDs()
 }
 
 // Notify sends a notification to the user

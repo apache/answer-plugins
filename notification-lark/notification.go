@@ -211,12 +211,7 @@ func makeCardMsg(args plugin.NotificationMessage) Card {
 
 // GetNewQuestionSubscribers returns the subscribers of the new question notification
 func (n *Notification) GetNewQuestionSubscribers() (userIDs []string) {
-	for userID, conf := range n.userConfigCache.userConfigMapping {
-		if conf.AllNewQuestions {
-			userIDs = append(userIDs, userID)
-		}
-	}
-	return userIDs
+	return n.userConfigCache.NewQuestionSubscriberIDs()
 }
 
 // Notify sends a notification to the user

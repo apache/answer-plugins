@@ -43,7 +43,7 @@ type UserConfig struct {
 type UserConfigCache struct {
 	// key: userID value: user config
 	userConfigMapping map[string]*UserConfig
-	sync.Mutex
+	sync.RWMutex
 }
 
 func NewUserConfigCache() *UserConfigCache {
@@ -57,6 +57,19 @@ func (ucc *UserConfigCache) SetUserConfig(userID string, config *UserConfig) {
 	ucc.Lock()
 	defer ucc.Unlock()
 	ucc.userConfigMapping[userID] = config
+}
+
+func (ucc *UserConfigCache) NewQuestionSubscriberIDs() []string {
+	ucc.RLock()
+	defer ucc.RUnlock()
+
+	userIDs := make([]string, 0)
+	for userID, conf := range ucc.userConfigMapping {
+		if conf.AllNewQuestions {
+			userIDs = append(userIDs, userID)
+		}
+	}
+	return userIDs
 }
 
 func (n *Notification) UserConfigFields() []plugin.ConfigField {
