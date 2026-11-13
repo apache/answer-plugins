@@ -28,6 +28,7 @@ The Storage plugin helps us to upload files to third-party storage. For example:
 - [x] [Aliyun OSS](https://github.com/apache/answer-plugins/tree/main/storage-aliyunoss)
 - [x] [Tencentyun COS](https://github.com/apache/answer-plugins/tree/main/storage-tencentyuncos)
 - [x] [S3](https://github.com/apache/answer-plugins/tree/main/storage-s3)
+- [x] [Cloudflare R2](https://github.com/apache/answer-plugins/tree/main/storage-s3)
 
 ### Cache
 
