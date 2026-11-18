@@ -25,6 +25,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 
 	"github.com/apache/answer-plugins/connector-apache/i18n"
 	"github.com/apache/answer-plugins/util"
@@ -37,6 +38,12 @@ import (
 var Info embed.FS
 
 type Connector struct {
+}
+
+func tokenURL(code string) string {
+	values := url.Values{}
+	values.Set("code", code)
+	return "https://oauth.apache.org/token?" + values.Encode()
 }
 
 func init() {
@@ -81,7 +88,7 @@ func (g *Connector) ConnectorReceiver(ctx *plugin.GinContext, receiverURL string
 	code := ctx.Query("code")
 
 	// exchange code for user info
-	resp, err := http.Get("https://oauth.apache.org/token?code=" + code)
+	resp, err := http.Get(tokenURL(code))
 	if err != nil {
 		log.Errorf("get token failed: %v", err)
 		return userInfo, err
