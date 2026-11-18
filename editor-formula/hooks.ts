@@ -19,7 +19,7 @@
 
 import { useEffect, RefObject } from 'react';
 
-// @ts-ignore
+// @ts-expect-error KaTeX does not declare its source auto-render entry.
 import katexRender from 'katex/contrib/auto-render/auto-render';
 
 const useRenderFormula = (element: HTMLElement | RefObject<HTMLElement> | null) => {
@@ -53,19 +53,27 @@ const useRenderFormula = (element: HTMLElement | RefObject<HTMLElement> | null) 
     } else {
       targetElement = element.current;
     }
-    render(targetElement);
-    const observer = new MutationObserver(() => {
-      render(targetElement);
-    });
+    if (!targetElement) {
+      return;
+    }
 
-    observer.observe(targetElement, {
-      childList: true,
-      subtree: true,
-    });
+    const options = { childList: true, characterData: true, subtree: true };
+    const renderAndObserve = () => {
+      // KaTeX can replace text nodes even when no complete formula is found.
+      // Do not observe those writes: they would schedule another render forever.
+      observer.disconnect();
+      try {
+        render(targetElement);
+      } finally {
+        observer.observe(targetElement, options);
+      }
+    };
+    const observer = new MutationObserver(renderAndObserve);
+    renderAndObserve();
 
     return () => {
       observer.disconnect();
-    }
+    };
   }, [element]);
 };
 
